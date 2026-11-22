@@ -1358,6 +1358,7 @@ function startQuestionWipe() {
 const NATIONAL_RATE_API = "https://rikeikentei-api.netlify.app/.netlify/functions/correct-rate"; // GitHub Pages test: API not configured yet
 let nationalRateRequestSequence = 0;
 let nationalRateSnapshot = null;
+let nationalRateSubmitted = false;
 
 function nationalRateKey(q) {
   const type = String(q?.type ?? '');
@@ -1367,9 +1368,16 @@ function nationalRateKey(q) {
 }
 
 async function loadNationalRate(q) {
-  if (!NATIONAL_RATE_API) { nationalRateSnapshot = null; return; }
+  nationalRateSubmitted = false;
+
+  if (!NATIONAL_RATE_API) {
+    nationalRateSnapshot = null;
+    return;
+  }
+
   const seq = ++nationalRateRequestSequence;
   nationalRateSnapshot = null;
+
   const key = nationalRateKey(q);
   if (!key) return;
   try {
@@ -1396,8 +1404,14 @@ function finalizeNationalRate(q, correct, timeout) {
     if (rateValue) rateValue.textContent = frozenRate === null ? '-' : String(frozenRate);
   }
   if (state.mode === 'DEBUG') return;
+
   const key = nationalRateKey(q);
   if (!key) return;
+
+  // 同じ出題に対する二重送信を防止
+  if (nationalRateSubmitted) return;
+  nationalRateSubmitted = true;
+  
   const requestId = typeof crypto !== 'undefined' && crypto.randomUUID
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
