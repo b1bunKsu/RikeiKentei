@@ -1,0 +1,5118 @@
+/* ============================================================
+   QuizGame Web - Stylesheet
+
+   整理方針:
+   - CSSルールとセレクタの出現順序を維持
+   - 後段の位置調整・上書きルールを維持
+   - 宣言の整形と同一ブロック内の完全重複のみ整理
+   - JavaScriptとの照合前に旧クラスを削除しない
+   ============================================================ */
+
+@font-face {
+    font-family: NotoJP;
+    src: url("./assets/NotoSansJP-Bold.ttf");
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #101b28;
+    font-family: NotoJP, "Noto Sans JP", sans-serif;
+}
+
+#stage {
+    position: absolute;
+    width: 1280px;
+    height: 720px;
+    transform-origin: top left;
+
+    background-image:
+        linear-gradient(#0002, #0005),
+        var(--game-background,
+            url("./assets/images/background.jpg"));
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: #fff;
+    overflow: hidden;
+}
+
+#app {
+    height: 100%;
+    position: relative;
+}
+
+.center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    gap: 20px;
+    text-align: center;
+    transform: translate(0px, 0px);
+}
+
+.title {
+    font-size: 68px;
+    text-shadow: 0 4px 9px #000a;
+    transform: translate(0px, 0px);
+}
+
+.subtitle {
+    font-size: 25px;
+    text-shadow: 0 2px 4px #000;
+    transform: translate(0px, 0px);
+}
+
+.btn {
+    border: 2px solid #121212;
+    background: #0007;
+    color: white;
+    padding: 12px 24px;
+    font: inherit;
+    font-size: 26px;
+    cursor: pointer;
+    min-width: 210px;
+    min-height: 65px;
+    transform: translate(0px, 0px);
+}
+
+.btn:hover {
+    background: #fff4;
+}
+
+.btn:disabled {
+    opacity: .55;
+    cursor: default;
+}
+
+.btns {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    transform: translate(0px, 0px);
+}
+
+.name {
+    font: inherit;
+    font-size: 24px;
+    padding: 10px;
+    width: 300px;
+    text-align: center;
+    transform: translate(0px, 0px);
+}
+
+.small {
+    font-size: 18px;
+    transform: translate(0px, 0px);
+}
+
+.note {
+    font-size: 17px;
+    max-width: 840px;
+    background: #0008;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transform: translate(0px, 0px);
+}
+
+.hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 42px;
+    font-size: 27px;
+    text-shadow: 0 2px 5px #000;
+    transform: translate(0px, 0px);
+}
+
+.board {
+    margin: 35px auto 0;
+    max-width: 1040px;
+    text-align: center;
+    background: #0a1826bf;
+    border: 2px solid #ffffff80;
+    border-radius: 16px;
+    padding: 25px 34px;
+    transform: translate(0px, 0px);
+}
+
+.qtype {
+    font-size: 25px;
+    transform: translate(0px, 0px);
+}
+
+.question {
+    font-size: 37px;
+    line-height: 1.5;
+    min-height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: pre-wrap;
+    transform: translate(0px, 0px);
+}
+
+.answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 28px auto;
+    max-width: 900px;
+    transform: translate(0px, 0px);
+}
+
+.answers .btn {
+    min-height: 86px;
+    overflow-wrap: anywhere;
+    transform: translate(0px, 0px);
+}
+
+.feedback {
+    font-size: 45px;
+    text-align: center;
+    text-shadow: 0 3px 8px #000;
+    transform: translate(0px, 0px);
+}
+
+.bar {
+    width: 500px;
+    height: 15px;
+    background: #0009;
+    border: 1px solid #fff8;
+    margin: auto;
+    transform: translate(0px, 0px);
+}
+
+.fill {
+    height: 100%;
+    background: #8cf08c;
+    width: 100%;
+    transform: translate(0px, 0px);
+}
+
+.muted {
+    opacity: .9;
+    transform: translate(0px, 0px);
+}
+
+.result-score {
+    font-size: 55px;
+}
+
+#message {
+    color: #fff3b0;
+    font-size: 17px;
+    max-width: 920px;
+    text-align: center;
+}
+
+.history {
+    max-width: 900px;
+    font-size: 23px;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+    background: #0008;
+    padding: 10px 18px;
+    border-radius: 8px;
+    transform: translate(0px, 0px);
+}
+
+/* Phase 2: additional quiz formats */
+
+.multi-help,
+.one-way-help {
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.multi-answers {
+    margin: 16px auto;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    transform: translate(0px, 0px);
+}
+
+.multi-answers .btn {
+    min-height: 58px;
+    font-size: 22px;
+    transform: translate(0px, 0px);
+}
+
+.btn.selected {
+    background: #c59d20;
+    border-color: #ffea75;
+    color: #111;
+    transform: translate(0px, 0px);
+}
+
+.confirm {
+    min-height: 54px;
+    font-size: 23px;
+    transform: translate(0px, 0px);
+}
+
+.one-way-rows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    margin: 12px auto;
+    transform: translate(0px, 0px);
+}
+
+.one-way-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translate(0px, 0px);
+}
+
+.row-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    background: #0009;
+    border: 1px solid #fff8;
+    font-size: 23px;
+    transform: translate(0px, 0px);
+}
+
+.one-way-choice {
+    width: 610px;
+    min-height: 52px;
+    font-size: 21px;
+    text-align: left;
+    transform: translate(0px, 0px);
+}
+
+.reject,
+.reject-placeholder {
+    width: 90px;
+    min-width: 90px;
+    min-height: 52px;
+    font-size: 20px;
+    text-shadow: 0 1px 3px #000;
+}
+
+.one-way-row.rejected {
+    opacity: .4;
+    transform: translate(0px, 0px);
+}
+
+.one-way-row .btn:disabled {
+    opacity: .3;
+}
+
+.one-way-row.rejected .btn:disabled {
+    opacity: 1;
+}
+
+/* Phase 3: typing input */
+
+.typing-hint {
+    font-size: 24px;
+    margin: 5px auto 8px;
+    transform: translate(0px, 0px);
+}
+
+.typing-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 12px auto 4px;
+    transform: translate(0px, 0px);
+}
+
+.typing-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 64px;
+    height: 58px;
+    background: #f4f4f4;
+    color: #151515;
+    border: 3px solid #404040;
+    font-size: 30px;
+    transform: translate(0px, 0px);
+}
+
+.typing-buffer {
+    height: 24px;
+    font-size: 15px;
+    color: #ffefae;
+    transform: translate(0px, 0px);
+}
+
+.typing-keys {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+    margin: 8px auto;
+    transform: translate(0px, 0px);
+}
+
+.typing-row {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    transform: translate(0px, 0px);
+}
+
+.typing-key {
+    width: 55px;
+    height: 43px;
+    padding: 0;
+    background: #162c48e8;
+    border: 1px solid #e1e1e1;
+    color: white;
+    font: inherit;
+    font-size: 21px;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.typing-key:hover {
+    background: #456b98;
+}
+
+.typing-key.blank {
+    border: 0;
+    background: none;
+    pointer-events: none;
+    transform: translate(0px, 0px);
+}
+
+.typing-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 10px;
+    transform: translate(0px, 0px);
+}
+
+.typing-special {
+    min-width: 112px;
+    height: 47px;
+    background: #263f59;
+    color: white;
+    border: 2px solid white;
+    font: inherit;
+    font-size: 20px;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.typing-special:hover {
+    background: #526b85;
+}
+
+.typing-key:disabled,
+.typing-special:disabled {
+    opacity: .5;
+}
+
+/* Phase 4: three additional question formats */
+
+.character-answers {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin: 10px auto 28px;
+    transform: translate(0px, 0px);
+}
+
+.character-answer {
+    display: grid;
+    place-items: center;
+    width: 55px;
+    height: 55px;
+    border: 3px solid #bbb;
+    background: #f9f9f9;
+    color: #151515;
+    font-size: 30px;
+    transform: translate(0px, 0px);
+}
+
+.character-grid {
+    display: grid;
+    justify-content: center;
+    gap: 16px 18px;
+    margin: 0 auto 12px;
+    transform: translate(0px, 0px);
+}
+
+.character-tile {
+    width: 98px;
+    height: 90px;
+    background: #203d5a;
+    color: #fff;
+    border: 2px solid #d9e8f5;
+    font: inherit;
+    font-size: 38px;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.character-tile:hover {
+    background: #3d6181;
+}
+
+.slot-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+    margin: 16px auto;
+    transform: translate(0px, 0px);
+}
+
+.slot-reels {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+    transform: translate(0px, 0px);
+}
+
+.slot-column {
+    width: 75px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    transform: translate(0px, 0px);
+}
+
+.slot-arrow {
+    height: 38px;
+    width: 75px;
+    background: #223e5e;
+    color: #fff;
+    border: 1px solid white;
+    font: inherit;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.slot-window {
+    width: 75px;
+    background: #f1f1f1;
+    color: #111;
+    border: 3px solid #c3c3c3;
+    text-align: center;
+    overflow: hidden;
+    transform: translate(0px, 0px);
+}
+
+.slot-adjacent {
+    height: 34px;
+    line-height: 34px;
+    opacity: .35;
+    font-size: 25px;
+    transform: translate(0px, 0px);
+}
+
+.slot-current {
+    height: 46px;
+    line-height: 46px;
+    background: #fff4a6;
+    border-block: 2px solid #d49a28;
+    font-size: 32px;
+    transform: translate(0px, 0px);
+}
+
+.slot-confirm {
+    min-height: 52px;
+    transform: translate(0px, 0px);
+}
+
+.group-instructions {
+    font-size: 18px;
+    margin: 8px;
+    transform: translate(0px, 0px);
+}
+
+.group-columns {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    margin: 14px auto;
+    transform: translate(0px, 0px);
+}
+
+.group-column {
+    width: 350px;
+    min-height: 215px;
+    border: 2px solid #ffffff90;
+    background: #102e4abf;
+    padding: 8px;
+    transform: translate(0px, 0px);
+}
+
+.group-heading {
+    font-size: 22px;
+    margin-bottom: 10px;
+    transform: translate(0px, 0px);
+}
+
+.group-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin: 5px auto;
+    font-size: 19px;
+    transform: translate(0px, 0px);
+}
+
+.group-item span {
+    display: grid;
+    place-items: center;
+    min-width: 145px;
+    min-height: 39px;
+    background: #f4f4f4;
+    color: #111;
+    border-radius: 3px;
+    transform: translate(0px, 0px);
+}
+
+.group-item button {
+    width: 38px;
+    height: 40px;
+    border: 1px solid white;
+    background: #385d80;
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.group-item button:disabled {
+    opacity: .25;
+}
+
+.group-unassigned {
+    margin: 0 auto 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 18px;
+    transform: translate(0px, 0px);
+}
+
+.group-confirm {
+    min-height: 48px;
+    font-size: 22px;
+    transform: translate(0px, 0px);
+}
+
+/* Phase 5: ordering and rearrangement */
+
+.order-help,
+.rearrange-help {
+    font-size: 17px;
+    margin: 7px auto 12px;
+}
+
+.order-slots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    flex-wrap: wrap;
+    margin: 8px auto 16px;
+    transform: translate(0px, 0px);
+}
+
+.order-slot {
+    width: 53px;
+    height: 56px;
+    background: #f2f2f2;
+    border: 2px solid #222;
+    color: #151515;
+    font: inherit;
+    font-size: 27px;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.order-arrow {
+    font-size: 18px;
+    transform: translate(0px, 0px);
+}
+
+.order-choices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 7px;
+    max-height: 310px;
+    overflow: auto;
+    transform: translate(0px, 0px);
+}
+
+.order-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transform: translate(0px, 0px);
+}
+
+.order-number {
+    display: grid;
+    place-items: center;
+    width: 47px;
+    height: 47px;
+    background: #203c60;
+    border: 1px solid white;
+    font-size: 22px;
+    transform: translate(0px, 0px);
+}
+
+.order-choice {
+    width: 680px;
+    min-height: 47px;
+    padding: 6px 15px;
+    font-size: 21px;
+    text-align: center;
+    transform: translate(0px, 0px);
+}
+
+.order-choice.selected {
+    background: #c59d20;
+    color: #111;
+    border-color: #ffea75;
+    transform: translate(0px, 0px);
+}
+
+.rearrange-cards {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    margin: 26px auto 28px;
+    transform: translate(0px, 0px);
+}
+
+.rearrange-card {
+    width: 76px;
+    height: 94px;
+    border: 3px solid #ddd;
+    background: #203c60;
+    color: #fff;
+    font: inherit;
+    font-size: 35px;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.rearrange-card.selected {
+    background: #e3bb36;
+    color: #111;
+    border-color: #fff;
+    transform: translate(0px, 0px);
+}
+
+.rearrange-ok {
+    min-height: 52px;
+    font-size: 23px;
+    transform: translate(0px, 0px);
+}
+
+/* Phase 6 */
+
+.line-help {
+    font-size: 17px;
+    margin: 4px auto 8px;
+    transform: translate(0px, 0px);
+}
+
+.line-area {
+    position: relative;
+    width: 940px;
+    height: 290px;
+    margin: 8px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    transform: translate(0px, 0px);
+}
+
+.line-svg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    transform: translate(0px, 0px);
+}
+
+.line-side {
+    width: 395px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    gap: 5px;
+    z-index: 1;
+    transform: translate(0px, 0px);
+}
+
+.line-row {
+    height: 51px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transform: translate(0px, 0px);
+}
+
+.line-text {
+    width: 336px;
+    height: 50px;
+    background: #213e61;
+    border: 2px solid #cdd6e3;
+    color: white;
+    font: inherit;
+    font-size: 19px;
+    cursor: pointer;
+    overflow-wrap: anywhere;
+    transform: translate(0px, 0px);
+}
+
+.line-key {
+    width: 50px;
+    height: 50px;
+    display: grid;
+    place-items: center;
+    background: #1b3656;
+    border: 2px solid #cdd6e3;
+    font-size: 23px;
+    transform: translate(0px, 0px);
+}
+
+.line-row.connected .line-text,
+.line-row.connected .line-key {
+    border-color: #ff4545;
+    background: #792626;
+}
+
+.line-row.active .line-text {
+    background: #d5b22e;
+    color: #101010;
+    transform: translate(0px, 0px);
+}
+
+.line-result {
+    font-size: 23px;
+    margin: 10px auto;
+    transform: translate(0px, 0px);
+}
+
+.rensou-hints {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 0 auto 14px;
+    transform: translate(0px, 0px);
+}
+
+.rensou-hint {
+    height: 42px;
+    width: 620px;
+    display: grid;
+    place-items: center;
+    background: #183b63;
+    border: 2px solid #d5e1ee;
+    font-size: 22px;
+    transition: opacity .5s;
+    transform: translate(0px, 0px);
+}
+
+.rensou-hint.revealed {
+    background: #f0f0f0;
+    color: #171717;
+    animation: hintReveal .5s ease;
+    transform: translate(0px, 0px);
+}
+
+@keyframes hintReveal {
+    from {
+        opacity: .2;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.rensou-choices {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    align-items: center;
+    transform: translate(0px, 0px);
+    text-shadow: 0 1px 3px #000c;
+}
+
+.rensou-choice {
+    height: 52px;
+    width: 720px;
+    background: #1a3a5a;
+    border: 2px solid white;
+    color: white;
+    font: inherit;
+    font-size: 22px;
+    cursor: pointer;
+    text-align: left;
+    transform: translate(0px, 0px);
+}
+
+.rensou-choice span {
+    display: inline-grid;
+    place-items: center;
+    width: 65px;
+    margin-right: 16px;
+    border-right: 1px solid white;
+    height: 45px;
+    transform: translate(0px, 0px);
+}
+
+/* Phase 7: effects and 3D polyhedra */
+
+.visual-quiz {
+    height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    margin: -3px auto 3px;
+    transform: translate(0px, 0px);
+}
+
+.effect-canvas {
+    width: 760px;
+    height: 180px;
+    transform: translate(0px, 0px);
+}
+
+.poly-canvas {
+    width: 600px;
+    height: 205px;
+    transform: translate(0px, 0px);
+}
+
+.visual-input .typing-hint {
+    display: none;
+    transform: translate(0px, 0px);
+}
+
+.visual-input .typing-boxes {
+    margin: 4px auto;
+    transform: translate(0px, 0px);
+}
+
+.visual-input .typing-keys {
+    gap: 3px;
+    transform: translate(0px, 0px);
+}
+
+.visual-input .typing-row {
+    gap: 3px;
+    transform: translate(0px, 0px);
+}
+
+.visual-input .typing-key {
+    height: 35px;
+    transform: translate(0px, 0px);
+}
+
+.visual-input .typing-actions {
+    margin-top: 5px;
+    transform: translate(0px, 0px);
+}
+
+.visual-input .typing-special {
+    height: 40px;
+    transform: translate(0px, 0px);
+}
+
+/* Phase 8: QuestionView.java + quiz.css を参考にした共通レイアウト */
+
+.quiz-shell {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    color: white;
+    text-shadow: 0 1px 3px #000;
+}
+
+.quiz-header {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 80px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    pointer-events: none;
+    transform: translate(0px, 0px);
+}
+
+.hud-panel {
+    position: absolute;
+    top: 60px;
+    width: 220px;
+    height: 120px;
+    border: 2px solid #000;
+    background: #0005;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    padding: 10px;
+    text-align: center;
+    transform: translate(0px, 0px);
+}
+
+.rank-panel-web {
+    left: 30px;
+    transform: translate(0px, 0px);
+}
+
+.player-panel-web {
+    right: 30px;
+    transform: translate(0px, 0px);
+}
+
+.hud-caption {
+    font-size: 25px;
+    font-weight: bold;
+    transform: translate(0px, 0px);
+}
+
+.hud-number {
+    font-size: 42px;
+    font-weight: bold;
+    line-height: 1.2;
+    transform: translate(0px, 0px);
+}
+
+.quiz-heading {
+    position: absolute;
+    top: 8px;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    transform: translate(0px, 0px);
+}
+
+.quiz-heading .qtype {
+    font-size: 30px;
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+}
+
+.question-count {
+    position: absolute;
+    left: calc(50% - 280px);
+    font-size: 30px;
+    white-space: nowrap;
+    transform: translate(0px, 0px);
+}
+
+.question-center {
+    position: absolute;
+    top: 152px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transform: translate(0px, 0px);
+}
+
+.progress-web {
+    font-size: 20px;
+    font-weight: bold;
+    min-height: 36px;
+    max-width: 1050px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 4px;
+    flex-wrap: wrap;
+    line-height: 1.1;
+    transform: translate(0px, 0px);
+}
+
+.progress-mark.correct {
+    color: #f33;
+    transform: translate(0px, 0px);
+}
+
+.progress-mark.incorrect {
+    color: #39f;
+    transform: translate(0px, 0px);
+}
+
+.progress-mark.pending {
+    color: #fff;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .board {
+    width: 800px;
+    max-width: none;
+    min-height: 260px;
+    height: 260px;
+    margin: 0;
+    background: #0005;
+    border: 2px solid #000;
+    border-radius: 0;
+    padding: 15px 30px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    box-shadow: none;
+}
+
+.quiz-shell .question {
+    font-size: 25px;
+    line-height: 1.5;
+    min-height: 0;
+    width: 100%;
+    height: 180px;
+    max-height: 180px;
+    display: block;
+    text-align: left;
+    padding: 0 30px;
+    overflow-wrap: anywhere;
+    overflow: hidden;
+}
+
+.timer-area-web {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 780px;
+    height: 28px;
+    transform: translate(0px, 15px);
+}
+
+.timer-area-web #clock {
+    font-size: 20px;
+    min-width: 65px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.timer-area-web .bar {
+    margin: 0;
+    width: 700px;
+    height: 18px;
+    border: 2px solid #000;
+    background: transparent;
+    transform: translate(0px, 0px);
+}
+
+.timer-area-web .fill {
+    background: #00ffff4d;
+    border-right: 2px solid #000;
+    transform: translate(0px, 0px);
+}
+
+.timer-area-web .fill.timer-yellow {
+    background: #ffff004d;
+    transform: translate(0px, 0px);
+}
+
+.timer-area-web .fill.timer-red {
+    background: #ff00004d;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom {
+    position: absolute;
+    top: 490px;
+    left: 0;
+    width: 100%;
+    height: 230px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom #question-ui {
+    width: 1100px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.quiz-shell .feedback {
+    position: absolute;
+    top: 260px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    min-height: 90px;
+    font-size: 65px;
+    font-weight: bold;
+    pointer-events: none;
+    z-index: 10;
+    text-shadow: 0 0 5px #000, 0 0 10px #000;
+}
+
+/* 仮UIの各形式を共通回答領域に収めるための暫定縮小。後続Phaseで形式別の座標を調整 */
+
+.answer-bottom .answers {
+    margin: 4px auto;
+    gap: 10px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .answers .btn {
+    min-height: 52px;
+    font-size: 21px;
+    padding: 5px 12px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .typing-boxes {
+    margin: 0 auto 5px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .typing-box {
+    height: 46px;
+    width: 56px;
+    font-size: 25px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .typing-keys {
+    gap: 2px;
+    margin: 2px auto;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .typing-row {
+    gap: 3px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .typing-key {
+    height: 31px;
+    width: 47px;
+    font-size: 17px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .typing-actions {
+    margin-top: 4px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .typing-special {
+    height: 36px;
+    font-size: 17px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .one-way-rows {
+    gap: 3px;
+    margin: 0 auto;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .one-way-row {
+    gap: 8px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .one-way-choice {
+    min-height: 37px;
+    font-size: 17px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .reject {
+    min-height: 37px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .row-num {
+    height: 37px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .character-answers {
+    margin: 0 auto 8px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .character-answer {
+    height: 43px;
+    width: 47px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .character-grid {
+    gap: 5px 8px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .character-tile {
+    height: 58px;
+    font-size: 27px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .slot-area {
+    gap: 8px;
+    margin: 0 auto;
+    transform: translate(0px, 100px);
+}
+
+.answer-bottom .slot-arrow {
+    height: 28px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .slot-adjacent {
+    height: 22px;
+    line-height: 22px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .slot-current {
+    height: 34px;
+    line-height: 34px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .group-columns {
+    margin: 2px auto;
+    gap: 8px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .group-column {
+    min-height: 150px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .group-item {
+    margin: 2px auto;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .group-item span {
+    min-height: 30px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .group-item button {
+    height: 30px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .order-choices {
+    max-height: 165px;
+    gap: 3px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .order-choice {
+    min-height: 31px;
+    font-size: 17px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .order-row {
+    gap: 6px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .order-number {
+    height: 31px;
+    width: 35px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .order-slots {
+    margin: 0 auto 4px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .order-slot {
+    height: 36px;
+    width: 39px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .rearrange-cards {
+    margin: 4px auto 10px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .rearrange-card {
+    height: 65px;
+    width: 64px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .line-area {
+    height: 170px;
+    margin: 0 auto;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .line-row {
+    height: 30px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .line-text {
+    height: 30px;
+    font-size: 15px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .line-key {
+    height: 30px;
+    width: 37px;
+    font-size: 17px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .line-side {
+    width: 395px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .line-result {
+    font-size: 18px;
+    margin: 2px auto;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .rensou-hints {
+    gap: 2px;
+    margin: 0 auto 4px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .rensou-hint {
+    height: 26px;
+    font-size: 16px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .rensou-choices {
+    gap: 2px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .rensou-choice {
+    height: 32px;
+    font-size: 16px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .rensou-choice span {
+    height: 28px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .visual-quiz {
+    height: 120px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .effect-canvas {
+    height: 115px;
+    transform: translate(0px, 0px);
+}
+
+.answer-bottom .poly-canvas {
+    height: 120px;
+    transform: translate(0px, 0px);
+}
+
+/* Phase 9: title / settings / result screens */
+
+.title-screen {
+    gap: 32px;
+    transform: translate(0px, 0px);
+}
+
+.title-screen .title {
+    font-size: 64px;
+    font-weight: 900;
+    transform: translate(0px, 0px);
+}
+
+.title-screen .subtitle {
+    font-size: 24px;
+    transform: translate(0px, 0px);
+}
+
+.title-screen .name {
+    width: 300px;
+    transform: translate(0px, 0px);
+}
+
+.mode-buttons {
+    gap: 15px;
+    transform: translate(0px, 0px);
+}
+
+.mode-buttons .btn {
+    width: 300px;
+    min-width: 0;
+    height: 70px;
+    font-size: 25px;
+    transform: translate(0px, 0px);
+}
+
+.settings-button {
+    width: 300px;
+    height: 65px;
+    font-size: 25px;
+    transform: translate(0px, 0px);
+}
+
+.settings-screen {
+    gap: 16px;
+    transform: translate(0px, 0px);
+}
+
+.settings-title {
+    font-size: 60px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    transform: translate(0px, 0px);
+}
+
+.settings-label {
+    font-size: 26px;
+    transform: translate(0px, 0px);
+}
+
+.settings-screen input[type=range] {
+    width: 200px;
+    accent-color: #e7f4ff;
+}
+
+.settings-check {
+    font-size: 23px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
+    transform: translate(0px, 0px);
+}
+
+.settings-check input {
+    width: 24px;
+    height: 24px;
+    transform: translate(0px, 0px);
+}
+
+.settings-note {
+    font-size: 16px;
+    background: #0008;
+    padding: 8px 15px;
+    transform: translate(0px, 0px);
+}
+
+.result-screen {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    text-shadow: 0 2px 5px #000;
+    transform: translate(0px, 0px);
+}
+
+.result-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 45px 55px;
+    font-size: 30px;
+    transform: translate(0px, 0px);
+}
+
+.result-rank,
+.result-player {
+    width: 240px;
+    text-align: center;
+}
+
+.result-player div {
+    font-size: 36px;
+    transform: translate(0px, 0px);
+}
+
+.result-heading {
+    font-size: 36px;
+    transform: translate(0px, 0px);
+}
+
+.result-panel {
+    position: absolute;
+    left: 210px;
+    top: 210px;
+    width: 860px;
+    min-height: 285px;
+    background: #0006;
+    border: 2px solid #000;
+    text-align: center;
+    padding: 22px;
+    transform: translate(0px, 0px);
+}
+
+.result-mode {
+    font-size: 28px;
+    transform: translate(0px, 0px);
+}
+
+.result-score {
+    font-size: 55px;
+    margin: 8px 0;
+    transform: translate(0px, 0px);
+}
+
+.result-sub {
+    font-size: 22px;
+    transform: translate(0px, 0px);
+}
+
+.result-history {
+    font-size: 20px;
+    max-height: 85px;
+    overflow: auto;
+    margin-top: 12px;
+    overflow-wrap: anywhere;
+    transform: translate(0px, 0px);
+}
+
+.result-actions {
+    position: absolute;
+    bottom: 55px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    transform: translate(0px, 0px);
+}
+
+.result-actions .btn {
+    width: 350px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell:has(#rank-target) .rank-panel-web #rank-target {
+    overflow-wrap: anywhere;
+    font-size: 42px;
+}
+
+/* Phase 11: shared screen and answer feedback animation. */
+
+@keyframes screenEnter {
+    from {
+        opacity: 0;
+        filter: brightness(.85);
+    }
+
+    to {
+        opacity: 1;
+        filter: brightness(1);
+    }
+}
+
+.screen-enter {
+    animation: screenEnter .28s ease-out both;
+    transform: translate(0px, 0px);
+}
+
+@keyframes feedbackPop {
+    0% {
+        opacity: 0;
+        transform: translateX(-50%) scale(.72);
+    }
+
+    65% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.09);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+.quiz-shell .feedback.feedback-visible {
+    animation: feedbackPop .34s cubic-bezier(.2, .8, .2, 1) both;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .feedback.feedback-correct {
+    color: #ff6565;
+}
+
+.quiz-shell .feedback.feedback-incorrect {
+    color: #79b8ff;
+}
+
+.quiz-shell .feedback.feedback-timeout {
+    color: #fff0a1;
+}
+
+.quiz-shell .board.board-correct {
+    box-shadow: inset 0 0 0 3px #ff656588;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .board.board-incorrect {
+    box-shadow: inset 0 0 0 3px #79b8ff88;
+    transform: translate(0px, 0px);
+}
+
+@media (prefers-reduced-motion:reduce) {
+
+    .screen-enter,
+    .quiz-shell .feedback.feedback-visible {
+        animation: none !important;
+    }
+}
+
+/* Phase 13: debug mode */
+
+.debug-entry {
+    font-size: 18px !important;
+    min-height: 42px !important;
+    padding: 6px 22px !important;
+    opacity: .9;
+    transform: translate(0px, 0px);
+}
+
+.debug-screen {
+    gap: 13px;
+    font-size: 21px;
+    transform: translate(0px, 0px);
+}
+
+.debug-screen .settings-title {
+    font-size: 44px;
+    margin: 0;
+    transform: translate(0px, 0px);
+}
+
+.debug-screen select,
+.debug-screen input[type=number] {
+    width: 380px;
+    max-width: 90%;
+    padding: 10px 14px;
+    background: #13253b;
+    color: #fff;
+    border: 2px solid #a5cfff;
+    border-radius: 7px;
+    font-size: 22px;
+}
+
+.debug-screen .settings-check {
+    font-size: 19px;
+    margin: 0;
+    transform: translate(0px, 0px);
+}
+
+.debug-buttons {
+    display: flex;
+    gap: 15px;
+    transform: translate(0px, 0px);
+}
+
+.debug-buttons .btn {
+    font-size: 20px;
+    min-height: 50px;
+    transform: translate(0px, 0px);
+}
+
+.debug-error {
+    color: #ffcbcb;
+    font-size: 17px;
+    max-width: 750px;
+    transform: translate(0px, 0px);
+}
+
+.debug-toolbar {
+    position: absolute;
+    right: 18px;
+    bottom: 10px;
+    z-index: 40;
+    background: #102038e8;
+    border: 1px solid #a5cfff;
+    border-radius: 8px;
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 16px;
+    transform: translate(0px, 0px);
+}
+
+.debug-toolbar button {
+    background: #244d77;
+    color: white;
+    border: 1px solid #c9e4ff;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 16px;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.debug-answer {
+    position: absolute;
+    left: 20px;
+    bottom: 12px;
+    z-index: 40;
+    background: #112b20eb;
+    color: #fff;
+    border: 1px solid #b9ffd0;
+    padding: 7px 12px;
+    border-radius: 7px;
+    font-size: 18px;
+    max-width: 740px;
+    overflow-wrap: anywhere;
+    transform: translate(0px, 0px);
+}
+
+/* Phase 15 — IMAGE_TOUCH */
+
+.image-touch-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.image-touch-frame {
+    width: 600px;
+    height: 300px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: rgba(255, 255, 255, .76);
+    border: 3px solid #243354;
+    border-radius: 12px;
+    box-sizing: border-box;
+    cursor: crosshair;
+}
+
+.image-touch-image {
+    display: block;
+    max-width: calc(100% - 20px);
+    max-height: calc(100% - 20px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    transform: translate(0px, 0px);
+}
+
+.image-touch-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    color: #171717;
+    pointer-events: none;
+    transform: translate(0px, 0px);
+}
+
+.image-touch-loading[hidden] {
+    display: none;
+}
+
+.image-touch-error {
+    color: #b91c1c;
+    transform: translate(0px, 0px);
+}
+
+.image-touch-marker {
+    display: none;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    font: 36px Arial, sans-serif;
+    color: #111;
+    text-shadow: 0 0 3px #fff;
+    pointer-events: none;
+}
+
+.image-touch-ok {
+    min-width: 105px;
+    min-height: 60px;
+}
+
+/* Phase 16: JavaFX-style image and OK button side by side */
+
+.image-touch-root {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translate(0px, 80px);
+}
+
+.image-touch-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 40px;
+    transform: translate(70px, -10px);
+}
+
+.image-touch-frame {
+    flex: none;
+    transform: translate(0px, 0px);
+}
+
+.image-touch-ok {
+    flex: none;
+    margin-bottom: 0;
+    transform: translate(0px, 0px);
+}
+
+.image-touch-debug-overlay {
+    display: none;
+    position: absolute;
+    pointer-events: none;
+    z-index: 2;
+    transform: translate(0px, 0px);
+}
+
+.image-touch-debug-overlay polygon {
+    fill: rgba(20, 190, 75, .24);
+    stroke: #16a34a;
+    stroke-width: 5;
+    transform: translate(0px, 0px);
+}
+
+.image-touch-marker {
+    z-index: 3;
+}
+
+/* Position correction: retain Phase 16 original sizes and layout. */
+
+.quiz-shell .question-center {
+    top: 105px;
+}
+
+.quiz-shell .answer-bottom {
+    top: 300px;
+}
+
+/* IMAGE_TOUCH: keep the 300px image and its OK button inside the stage. */
+
+.quiz-shell .image-touch-row {
+    transform: translate(70px, -10px);
+}
+
+/* =========================================================
+   JavaFX quiz.css appearance parity
+   Position settings below preserve the user's latest layout.
+   ========================================================= */
+
+:root {
+    --fx-panel: rgba(0, 0, 0, .30);
+    --fx-border: #000;
+    --fx-hover: rgba(0, 0, 0, .15);
+    --fx-pressed: rgba(0, 0, 0, .50);
+    --fx-selected: rgba(255, 215, 0, .30);
+}
+
+/* Latest user-chosen coordinates: do not alter when styling. */
+
+.quiz-shell .quiz-heading {
+    top: -10px;
+}
+
+.quiz-shell .question-center {
+    top: 40px;
+    gap: 0;
+}
+
+.quiz-shell .answer-bottom {
+    top: 300px;
+}
+
+.quiz-shell .progress-web {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 760px;
+    max-width: 760px;
+    min-height: 30px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.quiz-shell .question {
+    padding-top: 35px;
+    height: 180px;
+    box-sizing: border-box;
+}
+
+/* JavaFX panel, question board, text and timer. */
+
+.quiz-shell .hud-panel,
+.quiz-shell .board {
+    background: var(--fx-panel);
+    border: 2px solid var(--fx-border);
+    border-radius: 0;
+    box-shadow: none;
+}
+
+.quiz-shell .hud-panel {
+    top: 60px;
+}
+
+.quiz-shell .board {
+    width: 800px;
+    height: 260px;
+    min-height: 260px;
+    padding: 15px 30px;
+}
+
+.quiz-shell .question {
+    font-size: 25px;
+    font-weight: 700;
+    text-align: left;
+    line-height: 1.5;
+}
+
+.quiz-shell .quiz-heading .qtype,
+.quiz-shell .question-count {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.quiz-shell .progress-web {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.quiz-shell .progress-mark.correct {
+    color: red;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .progress-mark.incorrect {
+    color: blue;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .progress-mark.pending {
+    color: white;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .timer-area-web .bar {
+    width: 700px;
+    height: 18px;
+    border: 2px solid #000;
+    background: transparent;
+}
+
+.quiz-shell .timer-area-web .fill {
+    background: rgba(0, 255, 255, .30);
+    border-right: 2px solid #000;
+}
+
+.quiz-shell .timer-area-web .fill.timer-yellow {
+    background: rgba(255, 255, 0, .30);
+}
+
+.quiz-shell .timer-area-web .fill.timer-red {
+    background: rgba(255, 0, 0, .30);
+}
+
+/* Shared JavaFX-style interactive elements; keep their existing dimensions. */
+
+.quiz-shell .btn,
+.quiz-shell .typing-key,
+.quiz-shell .typing-special,
+.quiz-shell .character-tile,
+.quiz-shell .slot-arrow,
+.quiz-shell .group-item button,
+.quiz-shell .order-slot,
+.quiz-shell .order-choice,
+.quiz-shell .rearrange-card,
+.quiz-shell .line-text,
+.quiz-shell .line-key,
+.quiz-shell .rensou-choice {
+    background: var(--fx-panel);
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 0;
+    font-family: NotoJP, "Noto Sans JP", sans-serif;
+    font-weight: 700;
+    text-shadow: 0 0 3px #000, 0 0 2px #000;
+}
+
+.quiz-shell button:not(:disabled):hover {
+    background-color: var(--fx-hover);
+}
+
+.quiz-shell button:not(:disabled):active {
+    background-color: var(--fx-pressed);
+}
+
+.quiz-shell .btn.selected,
+.quiz-shell .order-choice.selected,
+.quiz-shell .rearrange-card.selected,
+.quiz-shell .line-row.active .line-text {
+    background: var(--fx-selected);
+    color: white;
+    border-color: #000;
+}
+
+.quiz-shell .line-row.connected .line-text,
+.quiz-shell .line-row.connected .line-key {
+    background: rgba(255, 0, 0, .30);
+    border-color: red;
+}
+
+.quiz-shell .typing-box {
+    background: var(--fx-panel);
+    border: 2px solid #000;
+    color: white;
+    font-weight: 700;
+    font-size: 40px;
+}
+
+.quiz-shell .character-answer {
+    background: var(--fx-panel);
+    border: 2px solid #000;
+    color: white;
+    font-weight: 700;
+}
+
+.quiz-shell .slot-window {
+    background: var(--fx-panel);
+    border: 2px solid #888;
+    color: white;
+}
+
+.quiz-shell .slot-current {
+    background: white;
+    border: 2px solid #888888;
+    color: black;
+}
+
+.quiz-shell .group-column {
+    background: var(--fx-panel);
+    border: 2px solid #000;
+    border-radius: 0;
+}
+
+.quiz-shell .group-item span {
+    background: var(--fx-panel);
+    border: 2px solid #333;
+    border-radius: 0;
+    color: white;
+}
+
+.quiz-shell .rensou-hint {
+    background: transparent;
+    border: 2px solid white;
+    border-radius: 0;
+    color: white;
+    font-size: 25px;
+    text-shadow: 0 0 3px #000;
+}
+
+.quiz-shell .rensou-hint.revealed {
+    background: var(--fx-panel);
+    color: white;
+}
+
+.quiz-shell .image-touch-frame {
+    background: var(--fx-panel);
+    border: 3px solid black;
+    border-radius: 0;
+}
+
+.quiz-shell .image-touch-ok {
+    min-width: 105px;
+    min-height: 60px;
+    font-size: 22px;
+    transform: translate(0px, 0px);
+}
+
+/* JavaFX result feedback: strong colors with soft glow. */
+
+.quiz-shell .feedback.feedback-correct {
+    color: rgb(255, 64, 64);
+    font-size: 128px;
+    text-shadow: 0 0 12px rgba(255, 255, 128, 1);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .feedback.feedback-incorrect {
+    color: rgb(0, 128, 255);
+    font-size: 112px;
+    text-shadow: 0 0 12px rgba(0, 0, 128, 1);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .feedback.feedback-timeout {
+    color: rgb(128, 128, 128);
+    font-size: 100px;
+    text-shadow: 0 0 12px rgba(0, 0, 0, 1);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .board.board-correct,
+.quiz-shell .board.board-incorrect {
+    box-shadow: none;
+}
+
+/* Reapply JavaFX default background to hoverable selected controls. */
+
+.quiz-shell .btn.selected:hover,
+.quiz-shell .order-choice.selected:hover,
+.quiz-shell .rearrange-card.selected:hover {
+    background: var(--fx-selected);
+}
+
+/* ========================================================
+   JavaFX source-matched question controls (fidelity pass)
+   User-set coordinates are preserved.
+   ======================================================== */
+
+.quiz-shell .quiz-heading {
+    top: -10px;
+}
+
+.quiz-shell .question-center {
+    top: 40px;
+    gap: 0;
+}
+
+.quiz-shell .answer-bottom {
+    top: 410px;
+}
+
+.quiz-shell .progress-web {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 760px;
+    max-width: 760px;
+    min-height: 30px;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.quiz-shell .question {
+    padding-top: 35px;
+    height: 180px;
+    box-sizing: border-box;
+}
+
+/* 4-choice: JavaFX ChoiceQuestionUI uses VBox(10), HBox(18), 60x60 key, 700x60 label */
+
+.fx-choice-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 850px;
+    margin: 0 auto;
+    transform: translate(0px, 70px);
+}
+
+.fx-choice-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    width: 850px;
+    transform: translate(0px, 0px);
+}
+
+.fx-choice-number,
+.fx-choice-button {
+    height: 60px;
+    min-height: 60px;
+    max-height: 60px;
+    background: rgba(0, 0, 0, .3);
+    color: #fff;
+    border: 2px solid #333;
+    border-radius: 0;
+    font-family: inherit;
+    font-size: 22px;
+    font-weight: 700;
+    text-shadow: 0 0 3px #000;
+    cursor: pointer;
+}
+
+.fx-choice-number {
+    width: 60px;
+    min-width: 60px;
+    max-width: 60px;
+    transform: translate(0px, 0px);
+}
+
+.fx-choice-button {
+    width: 700px;
+    min-width: 700px;
+    max-width: 700px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    transform: translate(0px, 0px);
+}
+
+.fx-choice-number:hover,
+.fx-choice-button:hover {
+    background: rgba(0, 0, 0, .15);
+}
+
+.fx-choice-number:active,
+.fx-choice-button:active {
+    background: rgba(0, 0, 0, .5);
+}
+
+.fx-choice-number.selected,
+.fx-choice-button.selected {
+    background: rgba(255, 255, 0, .3);
+}
+
+/* OX: JavaFX OXQuestionUI uses 300x260 buttons, HBox gap 40 and vector circle/cross */
+
+.fx-ox-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    padding: 0 20px transform;
+    transform: translate(0px, 80px);
+}
+
+.fx-ox-button {
+    width: 280px;
+    height: 280px;
+    transform: translate(0px, 0px);
+    flex: none;
+    display: grid;
+    place-items: center;
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid #000;
+    border-radius: 0;
+    cursor: pointer;
+}
+
+.fx-ox-button svg {
+    width: 180px;
+    height: 180px;
+    display: block;
+    transform: translate(0px, 0px);
+}
+
+.fx-ox-button:hover {
+    background: rgba(0, 0, 0, .15);
+}
+
+.fx-ox-button:active {
+    background: rgba(0, 0, 0, .5);
+}
+
+.fx-ox-button.selected {
+    background: rgba(255, 215, 0, .3);
+    transform: translate(0px, 0px);
+}
+
+/* Answer area starts at y=410; keep 260px OX buttons within 720px */
+
+/* JavaFX-style shared buttons and panels */
+
+.quiz-shell .multi-answers .btn,
+.quiz-shell .one-way-choice,
+.quiz-shell .reject,
+.quiz-shell .confirm,
+.quiz-shell .typing-key,
+.quiz-shell .typing-special,
+.quiz-shell .character-tile,
+.quiz-shell .slot-arrow,
+.quiz-shell .slot-confirm,
+.quiz-shell .group-item button,
+.quiz-shell .order-choice,
+.quiz-shell .order-slot,
+.quiz-shell .rearrange-card,
+.quiz-shell .line-text,
+.quiz-shell .line-key,
+.quiz-shell .rensou-choice {
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid #000;
+    border-radius: 0;
+    color: #fff;
+    text-shadow: 0 0 3px #000;
+    font-weight: 700;
+}
+
+.quiz-shell .multi-answers .btn.selected,
+.quiz-shell .order-choice.selected,
+.quiz-shell .rearrange-card.selected,
+.quiz-shell .line-row.active .line-text {
+    background: rgba(255, 215, 0, .3);
+    color: #fff;
+}
+
+.quiz-shell .line-row.connected .line-text,
+.quiz-shell .line-row.connected .line-key {
+    background: rgba(255, 0, 0, .3);
+    border-color: red;
+}
+
+.quiz-shell .typing-box {
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid #000;
+    color: white;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .character-answer {
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid #000;
+    color: white;
+}
+
+.quiz-shell .image-touch-frame {
+    background: rgba(0, 0, 0, .3);
+    border: 3px solid #000;
+    border-radius: 0;
+}
+
+.quiz-shell .rensou-hint {
+    border: 2px solid #fff;
+    border-radius: 0;
+    font-size: 25px;
+    color: #fff;
+}
+
+.quiz-shell .group-column {
+    border: 2px solid #000;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 0;
+}
+
+.quiz-shell .group-item span {
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid #333;
+    color: #fff;
+}
+
+/* Keep user-chosen panel geometry, use JavaFX colors */
+
+.quiz-shell .hud-panel,
+.quiz-shell .board {
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid black;
+    border-radius: 0;
+}
+
+.quiz-shell .timer-area-web .fill {
+    background: rgba(0, 255, 255, .3);
+}
+
+.quiz-shell .timer-area-web .fill.timer-yellow {
+    background: rgba(255, 255, 0, .3);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .timer-area-web .fill.timer-red {
+    background: rgba(255, 0, 0, .3);
+    transform: translate(0px, 0px);
+}
+
+/* ========================================================
+   JavaFX fidelity pass 2: character panel, slot and RENSOU
+   Reference: CharacterPanelQuestionUI.java, SlotQuestionUI.java,
+   RensouQuestionUI.java and quiz.css. User coordinates unchanged.
+   ======================================================== */
+
+/* Character panel: JavaFX 55px answer boxes and 98x94 panels, 18px grid gaps. */
+
+.quiz-shell .character-answers {
+    gap: 8px;
+    margin: 0 auto 12px;
+    transform: translate(0px, -60px);
+}
+
+.quiz-shell .character-answer {
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid black;
+    color: white;
+    border-radius: 0;
+    width: 65px;
+    height: 65px;
+    min-width: 65px;
+    min-height: 65px;
+    font-size: 40px;
+    box-sizing: border-box;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .character-grid {
+    column-gap: 18px;
+    row-gap: 18px;
+    margin: 0 auto 12px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .character-tile {
+    width: 98px;
+    height: 98px;
+    min-width: 98px;
+    min-height: 98px;
+    font-size: 50px;
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid black;
+    color: white;
+    border-radius: 0;
+    transform: translate(0px, 30px);
+}
+
+.quiz-shell .character-tile:disabled {
+    opacity: .45;
+}
+
+/* Slot: JavaFX reel 75px wide, 46px central cell, rectangular controls. */
+
+.quiz-shell .slot-reels {
+    gap: 4px;
+    transform: translate(0px, -20px);
+}
+
+.quiz-shell .slot-column {
+    width: 75px;
+    gap: 2px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .slot-arrow {
+    width: 75px;
+    height: 32px;
+    font-size: 14px;
+    border: 2px solid black;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .slot-window {
+    width: 75px;
+    background: rgba(0, 0, 0, .3);
+    border: 1px solid #888;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .slot-adjacent {
+    height: 30px;
+    line-height: 30px;
+    font-size: 25px;
+    color: white;
+    opacity: .35;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .slot-current {
+    height: 46px;
+    line-height: 42px;
+    font-size: 30px;
+    background: white;
+    color: black;
+    border: 1px solid #888888;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .slot-confirm {
+    width: 80px;
+    min-width: 100px;
+    min-height: 60px;
+    height: 45px;
+    font-size: 20px;
+    transform: translate(0px, 5px);
+}
+
+/* ========================================
+   SLOT：リールの表示領域を固定
+   ======================================== */
+
+.quiz-shell .slot-window {
+    position: relative;
+    width: 75px;
+    height: 78px;
+    overflow: hidden;
+    padding: 0;
+    box-sizing: content-box;
+}
+
+/* アニメーション用の文字列 */
+.quiz-shell .slot-animation-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    will-change: transform;
+}
+
+/* 各行の高さを固定 */
+.quiz-shell .slot-window .slot-adjacent {
+    height: 22px;
+    line-height: 22px;
+    margin: 0;
+}
+
+.quiz-shell .slot-window .slot-current {
+    height: 34px;
+    line-height: 34px;
+    margin: 0;
+}
+
+/* RENSOU: rectangular white outlined hints and JavaFX-style choice buttons.
+   Retain compact vertical layout to fit the fixed 720px stage. */
+
+.quiz-shell .rensou-hint {
+    border: 2px solid white;
+    border-radius: 0;
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    text-shadow: 0 0 3px black;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .rensou-hint.revealed {
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .rensou-choice {
+    border: 2px solid #333;
+    border-radius: 0;
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    font-size: 22px;
+    transform: translate(0px, 0px);
+
+}
+
+.quiz-shell .rensou-choice span {
+    border-right: 2px solid #333;
+    transform: translate(0px, 0px);
+}
+
+/* JavaFX feedback does not add an outline to the question board. */
+
+.quiz-shell .board.board-correct,
+.quiz-shell .board.board-incorrect {
+    box-shadow: none;
+}
+
+/* JavaFX fidelity pass 3: NumberQuestionUI / KanaQuestionUI / KatakanaQuestionUI */
+
+.quiz-shell .fx-typing-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-typing-root .typing-boxes {
+    gap: 8px;
+    margin: 0 auto 6px;
+    transform: translate(0px, -60px);
+}
+
+.quiz-shell .fx-typing-root .typing-box {
+    width: 65px;
+    height: 65px;
+    min-width: 65px;
+    min-height: 65px;
+    border: 2px solid black;
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    font-size: 40px;
+    font-weight: bold;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-typing-root .typing-buffer {
+    height: 16px;
+    font-size: 13px;
+    line-height: 16px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-typing-root .typing-keys {
+    gap: 6px;
+    margin: 0 auto;
+    align-items: center;
+}
+
+.quiz-shell .fx-typing-root .typing-row {
+    gap: 6px;
+    justify-content: flex-start;
+    align-items: center;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-typing-root .typing-key,
+.quiz-shell .fx-typing-root .typing-special {
+    height: 50px;
+    min-height: 50px;
+    width: 62px;
+    min-width: 62px;
+    padding: 0;
+    border: 2px solid black;
+    border-radius: 0;
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.quiz-shell .fx-typing-root .typing-special.typing-wide {
+    width: 124px;
+    min-width: 124px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-typing-root .typing-key.blank {
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-typing-root .typing-key:hover,
+.quiz-shell .fx-typing-root .typing-special:hover {
+    background: rgba(0, 0, 0, .15);
+}
+
+.quiz-shell .fx-typing-root .typing-key:active,
+.quiz-shell .fx-typing-root .typing-special:active {
+    background: rgba(0, 0, 0, .5);
+}
+
+/* QWERTY staggered rows in JavaFX NumberQuestionUI */
+
+.quiz-shell .fx-number-typing .typing-row-2 {
+    transform: translateX(15px);
+}
+
+.quiz-shell .fx-number-typing .typing-row-3 {
+    transform: translateX(30px);
+}
+
+/* Keep fixed user coordinates: question 40px, answer 410px. */
+
+/* Pass 3 alignment fix: side action buttons must not shift key rows. */
+
+.quiz-shell .fx-typing-root .typing-keys {
+    align-items: center;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-kana-typing .typing-row {
+    position: relative;
+    width: 810px;
+    flex: 0 0 auto;
+    transform: translate(-65px, 0px);
+}
+
+.quiz-shell .fx-number-typing .typing-row {
+    position: relative;
+    width: 674px;
+    flex: 0 0 auto;
+    transform: translate(-65px, 0px);
+}
+
+.quiz-shell .fx-typing-root .typing-row>.typing-special {
+    position: absolute;
+    left: calc(100% + 6px);
+    top: 0;
+}
+
+/* Preserve the intended JavaFX stagger without changing row centering. */
+
+/* JavaFX fidelity pass 4: OneWay, ORDER/ORDER-A, REARRANGEMENT.
+   Preserve the user's stage positions (board y=40, answer y=410). */
+
+/* OneWayQuestionUI: VBox 10, HBox 18, 60x60 number, 600x60 choice, 85x60 reject. */
+
+.quiz-shell .one-way-rows {
+    gap: 10px;
+    margin: 0 auto;
+    align-items: center;
+    transform: translate(1px, 70px);
+}
+
+.quiz-shell .one-way-row {
+    gap: 18px;
+    min-height: 60px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .one-way-row .row-num {
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    font-size: 22px;
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid #333;
+    color: #fff;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .one-way-row .one-way-choice {
+    width: 600px;
+    min-width: 600px;
+    min-height: 60px;
+    height: 60px;
+    font-size: 22px;
+    text-align: center;
+    padding: 4px 12px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .one-way-row .reject,
+.quiz-shell .one-way-row .reject-placeholder {
+    width: 85px;
+    min-width: 85px;
+    min-height: 60px;
+    height: 60px;
+    font-size: 22px;
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+    min-width: 90px;
+    width: 90px;
+    flex-shrink: 0;
+
+    /* 文字を中央に配置 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    /* 改行を防止 */
+    white-space: nowrap;
+    word-break: keep-all;
+    overflow-wrap: normal;
+
+    /* 左右の余白を均等に */
+    padding: 0;
+}
+
+.quiz-shell .one-way-row.rejected {
+    opacity: .5;
+    width: 80px;
+    min-width: 80px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    text-align: center;
+    transform: translate(0px, 0px);
+}
+
+/* OrderingQuestionUI: 65px answer slots, 50px labels, 700px choices, 12px row gap. */
+
+.quiz-shell .order-slots {
+    gap: 8px;
+    margin: 0 auto 8px;
+    flex-wrap: nowrap;
+    transform: translate(0px, -60px);
+}
+
+.quiz-shell .order-slot {
+    width: 65px;
+    min-width: 65px;
+    height: 65px;
+    font-size: 42px;
+    border: 2px solid black;
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .order-arrow {
+    font-size: 18px;
+    color: white;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .order-choices {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 5個分の高さを固定 */
+    height: 278px;
+    min-height: 278px;
+    max-height: 278px;
+    /* 最上段・最下段を固定して均等配置 */
+    justify-content: space-between;
+    gap: 0;
+    overflow-y: auto;
+    /* 既存の位置調整を維持 */
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .order-row {
+    gap: 12px;
+    min-height: 50px;
+    flex-shrink: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .order-row {
+    gap: 12px;
+    min-height: 50px;
+    flex-shrink: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .order-row {
+    gap: 12px;
+    min-height: 50px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .order-number {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    font-size: 22px;
+    background: rgba(0, 0, 0, .3);
+    border: 2px solid black;
+    color: white;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .order-choice {
+    width: 700px;
+    min-width: 700px;
+    min-height: 50px;
+    font-size: 22px;
+    padding: 4px 12px;
+    text-align: center;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .order-choice.selected,
+.quiz-shell .order-row:has(.order-choice.selected) .order-number {
+    background: rgba(255, 215, 0, .3);
+}
+
+/* RearrangementQuestionUI: 76x94 cards with 8px spacing, 105x50 OK. */
+
+.quiz-shell .rearrange-cards {
+    gap: 8px;
+    margin: 0 auto 18px;
+    flex-wrap: nowrap;
+    transform: translate(0px, 120px);
+}
+
+.quiz-shell .rearrange-card {
+    width: 76px;
+    min-width: 76px;
+    height: 94px;
+    font-size: 30px;
+    border: 2px solid black;
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .rearrange-card.selected {
+    background: rgba(255, 215, 0, .3);
+    border: 2px solid black;
+    color: white;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .rearrange-ok {
+    width: 105px;
+    min-width: 105px;
+    height: 60px;
+    min-height: 50px;
+    font-size: 22px;
+    border: 2px solid black;
+    border-radius: 0;
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    transform: translate(0px, 160px);
+}
+
+/* ==========================================================
+   JavaFX fidelity pass 5 — LINE_MATCHING / GROUP
+   Source: LineMatchingQuestionUI.java, GroupQuestionUI.java, quiz.css.
+   Preserve user-set stage geometry (question 40, answers 410).
+   ========================================================== */
+
+/* JavaFX line matching: 900x270 Pane shifted left 55px.
+   Left text x=-5 width400, left key x=400 width50;
+   right key x=560 width50, right text x=615 width400.
+   The right text extends beyond the Pane, as in the JavaFX source. */
+
+.quiz-shell .line-area {
+    position: relative;
+    width: 900px;
+    height: 270px;
+    margin: 0 auto;
+    display: block;
+    overflow: visible;
+    transform: translate(-55px, 70px);
+}
+
+.quiz-shell .line-svg {
+    position: absolute;
+    inset: 0;
+    width: 900px;
+    height: 270px;
+    overflow: visible;
+    z-index: 2;
+    pointer-events: none;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .line-side {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 270px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0;
+    overflow: visible;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .line-left,
+.quiz-shell .line-right {
+    left: 0;
+}
+
+.quiz-shell .line-row {
+    position: relative;
+    width: 1020px;
+    height: 50px;
+    min-height: 50px;
+    flex: 0 0 50px;
+    display: block;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .line-row .line-text,
+.quiz-shell .line-row .line-key {
+    position: absolute;
+    top: 0;
+    height: 50px;
+    min-height: 50px;
+    border: 2px solid #333;
+    background: rgba(0, 0, 0, .3);
+    color: white;
+    font-size: 22px;
+    font-weight: 700;
+    border-radius: 0;
+}
+
+.quiz-shell .line-row .line-text {
+    width: 400px;
+    text-align: center;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    cursor: pointer;
+}
+
+.quiz-shell .line-row .line-key {
+    width: 50px;
+    display: grid;
+    place-items: center;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .line-left .line-text {
+    left: -5px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .line-left .line-key {
+    left: 400px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .line-right .line-key {
+    left: 560px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .line-right .line-text {
+    left: 615px;
+    transform: translate(0px, 0px);
+}
+
+
+.quiz-shell .line-row.connected .line-text,
+.quiz-shell .line-row.connected .line-key {
+    background: rgba(255, 0, 0, .3);
+    border-color: red;
+}
+
+.quiz-shell .line-row.active .line-text {
+    background: rgba(255, 215, 0, .3);
+    color: white;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .line-result {
+    font-size: 22px;
+    margin: 3px auto;
+    transform: translate(0px, 0px);
+}
+
+/* GROUP: JavaFX 2 groups = 430px, 3 groups = 280px; height 285px. */
+
+.quiz-shell .group-columns {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 0 auto;
+    align-items: flex-start;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-column {
+    height: 285px;
+    min-height: 285px;
+    max-height: 285px;
+    padding: 5px;
+    border: 2px solid black;
+    border-radius: 0;
+    overflow: visible;
+    position: relative;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-column-2 {
+    width: 430px;
+    min-width: 430px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-column-3 {
+    width: 280px;
+    min-width: 280px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-column-0 {
+    border-color: red;
+    background: rgba(255, 0, 0, .10);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-column-1 {
+    border-color: green;
+    background: rgba(0, 160, 0, .10);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-column-2.group-column-3 {
+    border-color: blue;
+    background: rgba(0, 80, 255, .10);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-heading {
+    font-size: 22px;
+    font-weight: bold;
+    margin: 0 0 10px;
+    text-align: center;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-item {
+    min-height: 46px;
+    gap: 4px;
+    margin: 3px auto;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-item span {
+    min-height: 46px;
+    min-width: 0;
+    flex: 1;
+    padding: 4px 8px;
+    font-size: 22px;
+    border: 2px solid #333;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-item button {
+    width: 35px;
+    min-width: 35px;
+    height: 42px;
+    border: 2px solid black;
+    font-size: 18px;
+    border-radius: 0;
+    background: rgba(0, 0, 0, .3);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-confirm {
+    width: 105px;
+    min-width: 105px;
+    height: 55px;
+    min-height: 55px;
+    font-size: 22px;
+    border: 2px solid black;
+    border-radius: 0;
+    background: rgba(0, 0, 0, .3);
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-unassigned {
+    font-size: 18px;
+    margin: 4px auto;
+    transform: translate(0px, 0px);
+}
+
+/* JavaFX fidelity pass 6: MultipleChoiceQuestionUI, visual quizzes.
+   Preserve board top 40px, answers top 410px, progress overlay. */
+
+.quiz-shell .fx-multiple-choice {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    transform: translate(0px, 80px);
+}
+
+.quiz-shell .fx-multi-rows {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 270px;
+    min-height: 270px;
+    justify-content: flex-start;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-multi-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    height: 50px;
+    min-height: 50px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-multi-number,
+.quiz-shell .fx-multi-choice,
+.quiz-shell .fx-multi-ok {
+    font-family: inherit;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 3px #000;
+    border: 2px solid #333;
+    border-radius: 0;
+    background: rgba(0, 0, 0, .3);
+    cursor: pointer;
+}
+
+.quiz-shell .fx-multi-number {
+    width: 50px;
+    min-width: 50px;
+    height: 50px;
+    font-size: 22px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-multi-choice {
+    width: 700px;
+    min-width: 700px;
+    height: 50px;
+    font-size: 22px;
+    padding: 2px 10px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .fx-multi-number.selected,
+.quiz-shell .fx-multi-choice.selected {
+    background: rgba(255, 255, 0, .3);
+}
+
+.quiz-shell .fx-multi-number:hover,
+.quiz-shell .fx-multi-choice:hover,
+.quiz-shell .fx-multi-ok:hover {
+    background-color: rgba(0, 0, 0, .15);
+}
+
+.quiz-shell .fx-multi-number.selected:hover,
+.quiz-shell .fx-multi-choice.selected:hover {
+    background: rgba(255, 255, 0, .3);
+}
+
+.quiz-shell .fx-multi-ok {
+    width: 105px;
+    min-width: 105px;
+    height: 55px;
+    min-height: 55px;
+    margin-top: 7px;
+    font-size: 22px;
+    border-color: black;
+    transform: translate(500px, -60px);
+}
+
+/* Keep visual canvases at their native dimensions to avoid stretching the 3D glyphs. */
+
+.quiz-shell .visual-quiz {
+    width: 760px;
+    max-width: 100%;
+    height: 205px;
+    min-height: 205px;
+    overflow: visible;
+    margin: 0 auto 3px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .effect-canvas {
+    width: 760px;
+    height: 180px;
+    max-width: 100%;
+    object-fit: contain;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .poly-canvas {
+    width: 600px;
+    height: 205px;
+    max-width: 100%;
+    object-fit: contain;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .visual-input {
+    width: 100%;
+    transform: translate(0px, 0px);
+}
+
+/* Pass 6 hotfix: the transparent 1020px-wide right rows must not intercept
+   clicks on the left choices. Only the visible choice buttons receive clicks. */
+
+.quiz-shell .line-side,
+.quiz-shell .line-row {
+    pointer-events: none;
+}
+
+.quiz-shell .line-row .line-text {
+    pointer-events: auto;
+    transform: translate(0px, 0px);
+}
+
+/* ==========================================================
+   Pass 7 — JavaFX QuestionView / quiz.css common screen layout
+   Keeps the user-adjusted question top=40 and answer top=410.
+   ========================================================== */
+
+/* JavaFX uses a fixed 1280x720 scene and square-cornered panels. */
+
+.quiz-shell {
+    width: 1280px;
+    height: 720px;
+    overflow: hidden;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .quiz-header {
+    height: 80px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .rank-panel-web {
+    left: 30px;
+    transform: translate(0px, -35px);
+}
+
+.quiz-shell .player-panel-web {
+    right: 30px;
+    padding: 10px 0;
+    transform: translate(0px, -35px);
+}
+
+.quiz-shell .hud-panel {
+    top: 60px;
+    width: 220px;
+    height: 120px;
+    min-height: 120px;
+    gap: 2px;
+    border: 2px solid #000;
+    background: rgba(0, 0, 0, .30);
+    transform: translate(0px, -30px);
+}
+
+.quiz-shell .hud-caption {
+    font-size: 25px;
+    line-height: 1.25;
+    font-weight: 700;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .hud-number {
+    font-size: 42px;
+    line-height: 1.2;
+    font-weight: 700;
+    transform: translate(0px, 0px);
+}
+
+/* Keep the header text centered independently of left/right score panels. */
+
+.quiz-shell .quiz-heading {
+    left: 0;
+    width: 100%;
+    height: 60px;
+    top: -10px;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .quiz-heading .qtype {
+    left: 50%;
+    font-size: 30px;
+    white-space: nowrap;
+    transform: translate(-50%, 10px);
+}
+
+.quiz-shell .question-count {
+    left: calc(50% - 300px);
+    font-size: 30px;
+    white-space: nowrap;
+    transform: translate(0px, 10px);
+}
+
+/* The progress line is drawn over the question board, as requested. */
+
+.quiz-shell .question-center {
+    top: 40px;
+    left: 0;
+    gap: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .progress-web {
+    top: 0;
+    left: 50%;
+    width: 760px;
+    max-width: 760px;
+    min-height: 30px;
+    max-height: 60px;
+    transform: translate(-50%, -250px);
+    font-size: 20px;
+    line-height: 1.1;
+    gap: 4px;
+    z-index: 2;
+}
+
+.quiz-shell .board {
+    width: 800px;
+    height: 260px;
+    min-height: 260px;
+    max-width: none;
+    margin: 0;
+    padding: 15px 30px;
+    background: rgba(0, 0, 0, .30);
+    border: 2px solid black;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .question {
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 1.5;
+    height: 180px;
+    max-height: 180px;
+    padding: 10px 30px 0;
+    text-align: left;
+    transform: translate(0px, 0px);
+}
+
+/* JavaFX timer: 20px numeric label, 10px gap, 700x18 track. */
+
+.quiz-shell .timer-area-web {
+    width: 780px;
+    height: 28px;
+    gap: 10px;
+    padding: 0 0 5px;
+    transform: translate(0px, 15px);
+}
+
+.quiz-shell .timer-area-web #clock {
+    font-size: 20px;
+    min-width: 55px;
+    text-align: right;
+}
+
+.quiz-shell .timer-area-web .bar {
+    flex: 0 0 700px;
+    width: 700px;
+    height: 18px;
+    border: 2px solid black;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .timer-area-web .fill {
+    border-right: 2px solid black;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .answer-bottom {
+    top: 300px;
+    left: 0;
+    width: 100%;
+    overflow: visible;
+    transform: translate(0px, 0px);
+}
+
+/* Feedback sits above the question, not behind answer controls. */
+
+.quiz-shell .feedback {
+    z-index: 15;
+    pointer-events: none;
+}
+
+/* JavaFX image frame: square black outline and translucent black backing. */
+
+.quiz-shell .image-touch-frame {
+    background: rgba(0, 0, 0, .30);
+    border: 3px solid #000;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+/* JavaFX result screen: flat dark panels, square borders, no rounded cards. */
+
+.result-screen .result-panel {
+    background: rgba(0, 0, 0, .30);
+    border: 2px solid #000;
+    border-radius: 0;
+    transform: translate(0px, 0px);
+}
+
+.result-screen .result-heading {
+    font-size: 52px;
+    font-weight: 700;
+    transform: translate(0px, 0px);
+}
+
+.result-screen .result-score {
+    font-size: 40px;
+    font-weight: 700;
+    transform: translate(0px, 0px);
+}
+
+.result-screen .result-history {
+    background: transparent;
+    border: 2px solid #000;
+    border-radius: 0;
+    padding: 15px;
+    transform: translate(0px, 0px);
+}
+
+.result-screen .result-actions .btn {
+    border: 2px solid #000;
+    border-radius: 0;
+    background: rgba(0, 0, 0, .30);
+    font-size: 22px;
+    min-height: 55px;
+    transform: translate(0px, 0px);
+}
+
+/* Pass 7 visual overlay hotfix: EFFECT / POLYHEDRON inside question board. */
+
+.quiz-shell .question-center .board {
+    position: relative;
+    transform: translate(0px, 10px);
+}
+
+.quiz-shell .question-center .board .visual-board-overlay {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 3;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .question-center .board .visual-board-overlay .effect-canvas {
+    display: block;
+    width: 760px;
+    height: 180px;
+    max-width: 100%;
+    flex: none;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .question-center .board .visual-board-overlay .poly-canvas {
+    display: block;
+    width: 600px;
+    height: 205px;
+    max-width: 100%;
+    flex: none;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .answer-bottom .visual-input {
+    width: 100%;
+    transform: translate(0px, 0px);
+}
+
+/* Keep the question sentence above the EFFECT / POLYHEDRON visual layer. */
+
+.quiz-shell .question-center .board>.question {
+    position: relative;
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* =========================================================
+   GROUPクイズ：JavaFX版デザイン再現
+   ========================================================= */
+
+/* 全体 */
+
+.quiz-shell .group-java-root {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    width: max-content;
+    height: 285px;
+    margin: 0 auto;
+    transform: translate(70px, 90px);
+}
+
+/* グループ表示領域 */
+
+.quiz-shell .group-java-display {
+    position: relative;
+    height: 285px;
+    flex-shrink: 0;
+}
+
+.quiz-shell .group-java-columns {
+    display: flex;
+    align-items: center;
+    height: 285px;
+}
+
+.quiz-shell .group-java-display-2 .group-java-columns {
+    gap: 0;
+}
+
+.quiz-shell .group-java-display-3 .group-java-columns {
+    gap: 0px;
+}
+
+/* =========================================================
+   グループの箱
+   ========================================================= */
+
+.quiz-shell .group-java-box {
+    position: relative;
+    height: 320px;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-radius: 0;
+    background: rgba(0, 0, 0, 0.30);
+    overflow: visible;
+}
+
+/* 赤 */
+
+.quiz-shell .group-java-red {
+    background: rgba(255, 0, 0, 0.10);
+    border-color: red;
+}
+
+/* 緑 */
+
+.quiz-shell .group-java-green {
+    background: rgba(0, 160, 0, 0.10);
+    border-color: green;
+}
+
+/* 青 */
+
+.quiz-shell .group-java-blue {
+    background: rgba(0, 80, 255, 0.10);
+    border-color: blue;
+}
+
+/* =========================================================
+   背景の大きなA/B/C
+   ========================================================= */
+
+.quiz-shell .group-java-background {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+    font-weight: bold;
+    pointer-events: none;
+    user-select: none;
+}
+
+.quiz-shell .group-java-id-red {
+    color: rgba(255, 0, 0, 0.20);
+}
+
+.quiz-shell .group-java-id-green {
+    color: rgba(0, 160, 0, 0.20);
+}
+
+.quiz-shell .group-java-id-blue {
+    color: rgba(0, 80, 255, 0.20);
+}
+
+/* =========================================================
+   グループ名
+   ========================================================= */
+
+.quiz-shell .group-java-foreground {
+    position: relative;
+    z-index: 1;
+    height: 100%;
+}
+
+.quiz-shell .group-java-name {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    color: white;
+    text-shadow: 0 0 2px black,
+        0 0 2px black;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   選択肢配置領域
+   ========================================================= */
+
+.quiz-shell .group-java-items {
+    position: relative;
+    height: 245px;
+    margin: 0 auto;
+}
+
+/* 選択肢1行 */
+
+.quiz-shell .group-java-choice {
+    position: absolute;
+    left: 0;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   選択肢の文字ボックス
+   ========================================================= */
+
+.quiz-shell .group-java-choice-label {
+    flex: 1;
+    min-width: 0;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.30);
+    border: 2px solid #333333;
+    border-radius: 0;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 0 0 2px black,
+        0 0 2px black;
+    white-space: nowrap;
+}
+
+/* =========================================================
+   左右移動ボタン
+   ========================================================= */
+
+.quiz-shell .group-java-move {
+    width: 35px;
+    min-width: 35px;
+    height: 42px;
+    flex-shrink: 0;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.30);
+    border: 2px solid black;
+    border-radius: 0;
+    color: white;
+    font-family: Arial, sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 0 2px black;
+    cursor: pointer;
+}
+
+.quiz-shell .group-java-move:hover:not(:disabled) {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.quiz-shell .group-java-move:active:not(:disabled) {
+    background: rgba(0, 0, 0, 0.50);
+}
+
+.quiz-shell .group-java-move:disabled {
+    opacity: 0.35;
+    cursor: default;
+}
+
+/* =========================================================
+   2グループ時の中央未分類領域
+   ========================================================= */
+
+.quiz-shell .group-java-center {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 285px;
+    z-index: 3;
+    pointer-events: none;
+}
+
+.quiz-shell .group-java-center-spacer {
+    height: 40px;
+}
+
+.quiz-shell .group-java-center .group-java-choice {
+    pointer-events: auto;
+}
+
+/* =========================================================
+   OKボタン
+   ========================================================= */
+
+.quiz-shell .group-java-ok-area {
+    width: 105px;
+    height: 285px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.quiz-shell .group-java-ok {
+    width: 105px;
+    min-width: 105px;
+    height: 55px;
+    min-height: 55px;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.30);
+    border: 2px solid black;
+    border-radius: 0;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 0 0 2px black;
+    cursor: pointer;
+    transform: translate(0px, 0px);
+}
+
+.quiz-shell .group-java-ok:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.quiz-shell .group-java-ok:active {
+    background: rgba(0, 0, 0, 0.50);
+}
+
+/* GROUP：選択肢のクリックを有効にする */
+
+.quiz-shell .group-java-choice-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    overflow: visible;
+}
+
+.quiz-shell .group-java-choice-layer .group-java-choice {
+    position: absolute;
+    z-index: 1;
+    pointer-events: auto;
+}
+
+.quiz-shell .group-java-choice-layer .group-java-move {
+    position: relative;
+    z-index: 2;
+    pointer-events: auto;
+    cursor: pointer;
+}
+
+/* 無効な方向のボタン */
+
+.quiz-shell .group-java-choice-layer .group-java-move:disabled {
+    cursor: default;
+}
+
+/* =========================================================
+   RENSOU：JavaFX版デザイン
+   ========================================================= */
+
+.quiz-shell .rensou-java-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    font-family: "Noto Sans JP", sans-serif;
+    color: white;
+    transform: translate(0, -120px);
+}
+
+/* =========================================================
+   ヒント領域
+   ========================================================= */
+
+.quiz-shell .rensou-java-hints {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    width: 900px;
+    transform: translate(0, -95px);
+}
+
+.quiz-shell .rensou-java-hint-row {
+    position: relative;
+    width: 900px;
+    height: 42px;
+    flex-shrink: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ヒント1～4の枠 */
+
+.quiz-shell .rensou-java-placeholder {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 400px;
+    height: 42px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    border-radius: 0;
+    background: transparent;
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    text-shadow: 0 1 2px black;
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+/* ヒント1も含めて通常表示 */
+
+.quiz-shell .rensou-java-placeholder {
+    opacity: 1;
+    transition: opacity 0.5s linear;
+}
+
+/* ヒント本文への切り替え */
+
+.quiz-shell .rensou-java-hint-row.revealed .rensou-java-placeholder {
+    opacity: 0;
+}
+
+.quiz-shell .rensou-java-hint-row.revealed .rensou-java-hint-text {
+    opacity: 1;
+}
+
+/* 実際のヒント本文 */
+
+.quiz-shell .rensou-java-hint-text {
+    position: absolute;
+    inset: 0;
+    width: 900px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: 0 1 3px black;
+    opacity: 0;
+    transition: opacity 0.5s linear;
+}
+
+/* ヒント表示後 */
+
+.quiz-shell .rensou-java-hint-row.revealed .rensou-java-placeholder {
+    opacity: 0;
+}
+
+.quiz-shell .rensou-java-hint-row.revealed .rensou-java-hint-text {
+    opacity: 1;
+}
+
+/* =========================================================
+   選択肢
+   ========================================================= */
+
+.quiz-shell .rensou-java-choices {
+    width: 850px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    transform: translate(0, -19px);
+}
+
+.quiz-shell .rensou-java-choice-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    width: 850px;
+    height: 60px;
+}
+
+/* A / B / C / D */
+
+.quiz-shell .rensou-java-number {
+    width: 60px;
+    min-width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.30);
+    border: 2px solid #333333;
+    border-radius: 0;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 0 0 2px black;
+}
+
+/* 選択肢本文 */
+
+.quiz-shell .rensou-java-choice {
+    width: 700px;
+    min-width: 700px;
+    height: 60px;
+    min-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4px 12px;
+    box-sizing: border-box;
+    background: rgba(0, 0, 0, 0.30);
+    border: 2px solid #333333;
+    border-radius: 0;
+    color: white;
+    font-size: 22px;
+    font-weight: bold;
+    text-shadow: 0 1 3px black;
+    cursor: pointer;
+    white-space: normal;
+    text-align: center;
+}
+
+.quiz-shell .rensou-java-choice:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.quiz-shell .rensou-java-choice:active {
+    background: rgba(0, 0, 0, 0.50);
+}
+
+/* 選択済み */
+
+.quiz-shell .rensou-java-choice.selected,
+.quiz-shell .rensou-java-number.selected {
+    background: rgba(255, 255, 0, 0.30);
+}
+
+/* ========================================
+   SLOT：中央の白い背景・ハイライトを削除
+   ======================================== */
+
+/* ========================================
+   SLOT：灰色のボーダーを維持
+   ======================================== */
+
+/* リール全体：灰色の枠線 */
+.quiz-shell .slot-window {
+    background: rgba(0, 0, 0, 0.30);
+    border: 1px solid #888888;
+    overflow: hidden;
+}
+
+/* 中央の文字：ハイライトなし */
+.quiz-shell .slot-current {
+    background: transparent;
+    /* border: none; */
+    color: white;
+}
+
+/* 上下の文字 */
+.quiz-shell .slot-adjacent {
+    background: transparent;
+    border: none;
+    color: white;
+}
+
+/* アニメーション中の各文字 */
+.quiz-shell .slot-spin-cell {
+    height: 34px;
+    line-height: 34px;
+    text-align: center;
+    font-size: 32px;
+    color: white;
+    background: transparent;
+    border: none;
+    box-sizing: border-box;
+}
+
+/* アニメーション用の文字列 */
+.quiz-shell .slot-animation-strip {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    pointer-events: none;
+    will-change: transform;
+}
+
+/* 各文字の高さ */
+.quiz-shell .slot-window .slot-adjacent,
+.quiz-shell .slot-window .slot-current,
+.quiz-shell .slot-spin-cell {
+    height: 46px;
+    line-height: 46px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* リールの表示領域：3行分 */
+.quiz-shell .slot-window {
+    height: 138px;
+    overflow: hidden;
+}
+
+/* 回転中の文字 */
+.quiz-shell .slot-spin-cell {
+    font-size: 32px;
+    text-align: center;
+    color: white;
+    background: transparent;
+    border: none;
+}
+
+/* ========================================
+   SLOT：文字を区切る横線
+   ======================================== */
+
+/* 通常表示 */
+.quiz-shell .slot-window .slot-adjacent,
+.quiz-shell .slot-window .slot-current {
+    border: none;
+    border-bottom: 1px solid #888888;
+    box-sizing: border-box;
+}
+
+/* 回転アニメーション中 */
+.quiz-shell .slot-spin-cell {
+    border: none;
+    border-bottom: 1px solid #888888;
+    box-sizing: border-box;
+}
+
+/* リールの外枠 */
+.quiz-shell .slot-window {
+    border: 3px solid #555555;
+}
+
+/* ========================================
+   SLOT：すべての文字サイズを統一
+   ======================================== */
+
+.quiz-shell .slot-window .slot-adjacent,
+.quiz-shell .slot-window .slot-current,
+.quiz-shell .slot-spin-cell {
+    font-size: 32px;
+    font-weight: normal;
+    opacity: 1;
+}
+
+/* ========================================
+   SLOT：中央の解答枠
+   ======================================== */
+
+/* リール全体を基準にする */
+.quiz-shell .slot-reels {
+    position: relative;
+}
+
+/* 中央の文字を囲む横長の枠 */
+.quiz-shell .slot-answer-frame {
+    position: absolute;
+
+    /* 全リールの横幅 */
+    left: -5px;
+    right: -5px;
+
+    /* ▲ボタン38px + 間隔3px + 上段46px */
+    top: 80px;
+
+    /* 中央の文字1行分 */
+    height: 55px;
+
+    box-sizing: border-box;
+
+    /* 黄色の枠 */
+    border: 4px solid #000000;
+    border-radius: 3px;
+
+    /* 文字を隠さない */
+    background: transparent;
+
+    /* ボタン操作を妨げない */
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+/* ========================================
+   ONE_WAY：選択中のハイライト
+   ======================================== */
+
+.quiz-shell .one-way-choice.one-way-selected,
+.quiz-shell .one-way-choice.one-way-selected:disabled {
+    background: var(--fx-selected) !important;
+    color: #fff !important;
+    border-color: #000 !important;
+}
+
+/* ========================================
+   ONE_WAY：未開放の行
+   ======================================== */
+
+.quiz-shell .one-way-row.one-way-pending .row-num,
+.quiz-shell .one-way-row.one-way-pending .one-way-choice,
+.quiz-shell .one-way-row.one-way-pending .reject {
+    opacity: 0.5;
+}
+
+/* ========================================
+   ONE_WAY：選択済みの行
+   ======================================== */
+
+.quiz-shell .one-way-row.one-way-selected .row-num,
+.quiz-shell .one-way-row.one-way-selected .one-way-choice {
+    background: var(--fx-selected) !important;
+    color: #fff !important;
+    border-color: #000 !important;
+    opacity: 1 !important;
+}
+
+/* 選択後にdisabledになっても黄色を維持 */
+
+.quiz-shell .one-way-row.one-way-selected .one-way-choice:disabled {
+    background: var(--fx-selected) !important;
+    opacity: 1 !important;
+}
+
+
+
+
+/* =========================================
+   JavaFX版 正誤アニメーション
+   位置修正版
+   ========================================= */
+
+/* 正解：3.5倍から1.5倍へ縮小 */
+@keyframes java-correct-animation {
+    0% {
+        transform: translateX(-50%) scale(3.5);
+    }
+
+    100% {
+        transform: translateX(-50%) scale(1.5);
+    }
+}
+
+/* 不正解：左右に揺れる */
+@keyframes java-incorrect-animation {
+    0% {
+        transform: translateX(-50%) scale(1.5);
+    }
+
+    9.09% {
+        transform: translateX(calc(-50% - 30px)) scale(1.5);
+    }
+
+    18.18% {
+        transform: translateX(calc(-50% + 25px)) scale(1.5);
+    }
+
+    27.27% {
+        transform: translateX(calc(-50% - 20px)) scale(1.5);
+    }
+
+    36.36% {
+        transform: translateX(calc(-50% + 17px)) scale(1.5);
+    }
+
+    45.45% {
+        transform: translateX(calc(-50% - 14px)) scale(1.5);
+    }
+
+    54.55% {
+        transform: translateX(calc(-50% + 11px)) scale(1.5);
+    }
+
+    63.64% {
+        transform: translateX(calc(-50% - 8px)) scale(1.5);
+    }
+
+    72.73% {
+        transform: translateX(calc(-50% + 6px)) scale(1.5);
+    }
+
+    81.82% {
+        transform: translateX(calc(-50% - 4px)) scale(1.5);
+    }
+
+    90.91% {
+        transform: translateX(calc(-50% + 2px)) scale(1.5);
+    }
+
+    100% {
+        transform: translateX(-50%) scale(1.5);
+    }
+}
+
+/* 共通：画面中央に配置 */
+.quiz-shell #feedback {
+    position: absolute;
+    left: 50%;
+    top: 260px;
+    transform: translateX(-50%);
+    transform-origin: center center;
+    text-align: center;
+    pointer-events: none;
+    z-index: 100;
+}
+
+/* 表示状態 */
+.quiz-shell #feedback.feedback-visible {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* 正解 */
+.quiz-shell #feedback.feedback-visible.feedback-correct {
+    animation: java-correct-animation 200ms linear forwards !important;
+}
+
+/* 不正解 */
+.quiz-shell #feedback.feedback-visible.feedback-incorrect {
+    animation: java-incorrect-animation 330ms linear forwards !important;
+}
+
+/* 時間切れ */
+.quiz-shell #feedback.feedback-visible.feedback-timeout {
+    animation: none !important;
+    transform: translateX(-50%) scale(1.5);
+}
+
+/* =========================================
+   正誤表示の位置を完全統一
+   ========================================= */
+
+.quiz-shell #feedback {
+    position: absolute;
+    left: 50%;
+    top: 120px;
+
+    width: 700px;
+    height: 100px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    margin: 0;
+    line-height: 1;
+
+    transform-origin: center center;
+    text-align: center;
+}
+
+
+
+/* ========================================
+   出題UI フェードイン
+   ======================================== */
+
+@keyframes question-ui-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.quiz-shell #question-ui {
+    animation: question-ui-fade-in 0.5s linear both;
+}
+
+/* ========================================
+   問題文ワイプ
+   ======================================== */
+
+.quiz-shell .question-center .question.question-wipe-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+
+    width: 100%;
+    min-height: 180px;
+
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 1.45;
+
+    white-space: pre;
+    overflow: visible;
+
+    clip-path: none;
+    animation: none;
+}
+
+.question-wipe-page {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    max-width: 100%;
+    flex-shrink: 0;
+}
+
+.question-wipe-line {
+    display: block;
+    width: max-content;
+    max-width: none;
+
+    font: inherit;
+    line-height: inherit;
+    white-space: pre;
+
+    overflow: hidden;
+    clip-path: inset(0 100% 0 0);
+}
+
+/* グループ分けクイズの背景文字の影を消す */
+.quiz-shell .group-java-background {
+    text-shadow: none !important;
+    -webkit-text-stroke: 0 !important;
+}
+
+
+/* =========================================================
+   シンプルなリザルト画面
+   ========================================================= */
+
+.result-simple {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: NotoJP, "Noto Sans JP", sans-serif;
+    text-shadow: 0 2px 5px black;
+}
+
+/* RESULT */
+.result-simple-title {
+    font-size: 48px;
+    font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* 結果板 */
+.result-simple-board {
+    width: 600px;
+    padding: 35px 40px;
+    background: rgba(0, 0, 0, 0.30);
+    border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+/* RANK / SCORE */
+.result-simple-label {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+/* ランク */
+.result-simple-rank {
+    font-size: 55px;
+    font-weight: bold;
+    line-height: 1.2;
+    margin-bottom: 15px;
+}
+
+/* 得点 */
+.result-simple-score {
+    font-size: 55px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+/* ボタン */
+.result-simple-actions {
+    margin-top: 35px;
+}
+
+.result-simple-actions .btn {
+    width: 260px;
+    height: 65px;
+    font-size: 22px;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.30);
+    border: 2px solid black;
+    border-radius: 0;
+    color: white;
+    cursor: pointer;
+}
+
+.result-simple-actions .btn:hover {
+    background: rgba(0, 0, 0, 0.15);
+}
+
+
+/* =========================================================
+   QUIZ INTRO
+   ========================================================= */
+
+.quiz-intro-screen {
+    position: relative;
+    width: 1280px;
+    height: 720px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: "Noto Sans JP", sans-serif;
+    color: white;
+}
+
+/* 中央の箱 */
+.quiz-intro-box {
+    width: 850px;
+    height: 260px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: rgba(0, 0, 0, 0.30);
+    border: 2px solid black;
+    box-sizing: border-box;
+}
+
+/* モード名 */
+.quiz-intro-mode {
+    font-size: 65px;
+    font-weight: bold;
+    text-align: center;
+
+    color: white;
+    text-shadow: 0 2px 5px black;
+}
+
+/* =========================================================
+   タイトル → イントロ：白フェード
+   ========================================================= */
+
+.quiz-white-fade {
+    position: absolute;
+    inset: 0;
+
+    width: 1280px;
+    height: 720px;
+
+    background: white;
+    opacity: 0;
+
+    pointer-events: none;
+    z-index: 9999;
+}
+
+
+/* ========================================
+   解答後：すべてのボタンを半透明にする
+   ======================================== */
+
+.quiz-shell button:disabled {
+    opacity: 0.5;
+    cursor: default;
+    pointer-events: none;
+}
+
+/* =========================================================
+   解答確定後：全問題形式の操作ボタン・番号キーを半透明に
+   button以外のspan/divキーにも適用する
+   ========================================================= */
+.quiz-shell.answer-disabled button,
+.quiz-shell.answer-disabled .line-key,
+.quiz-shell.answer-disabled .order-number,
+.quiz-shell.answer-disabled .rensou-java-number,
+.quiz-shell.answer-disabled .row-num,
+.quiz-shell.answer-disabled .fx-multi-number,
+.quiz-shell.answer-disabled .fx-choice-number {
+    opacity: 0.5 !important;
+    cursor: default;
+    pointer-events: none;
+}
+
+
+/* ========================================
+   SLOT：回転中はボタンを半透明にしない
+   ======================================== */
+
+.quiz-shell:not(.answer-disabled) .slot-arrow,
+.quiz-shell:not(.answer-disabled) .slot-confirm {
+    opacity: 1 !important;
+}
+
+/* 解答確定後だけ半透明にする */
+.quiz-shell.answer-disabled .slot-arrow,
+.quiz-shell.answer-disabled .slot-confirm {
+    opacity: 0.5 !important;
+    cursor: default;
+    pointer-events: none;
+}
+
+
+/* ========================================
+   一方通行クイズ：解答後の選択行を半透明にする
+   ======================================== */
+
+.quiz-shell.answer-disabled .one-way-row.one-way-selected .row-num,
+
+.quiz-shell.answer-disabled .one-way-row.one-way-selected .one-way-choice {
+    opacity: 0.5 !important;
+    pointer-events: none;
+}
+
+
+/* ========================================
+   順番当てクイズ：回答表示欄
+   ======================================== */
+
+/* 回答表示欄はクリック不可 */
+.quiz-shell .order-slot {
+    pointer-events: none !important;
+    cursor: default !important;
+}
+
+/* 解答後も回答表示欄は半透明にしない */
+.quiz-shell.answer-disabled .order-slot {
+    opacity: 1 !important;
+}
+
+
+/* =========================================================
+   スマートフォン横画面対応
+   - PCの1280×720レイアウトは維持
+   - スマホのズーム・スクロール・長押し誤操作を抑制
+   ========================================================= */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overscroll-behavior: none;
+    touch-action: manipulation;
+    -webkit-text-size-adjust: 100%;
+}
+
+#stage {
+    -webkit-tap-highlight-color: transparent;
+}
+
+#stage button {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+#rotate-notice[hidden] {
+    display: none !important;
+}
+
+#rotate-notice {
+    position: fixed;
+    inset: 0;
+    z-index: 20000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    text-align: center;
+    color: white;
+    background: #101b28;
+    font-family: NotoJP, "Noto Sans JP", sans-serif;
+}
+
+.rotate-notice-content {
+    max-width: 520px;
+}
+
+.rotate-icon {
+    font-size: 72px;
+    line-height: 1.1;
+    margin-bottom: 18px;
+}
+
+.rotate-title {
+    font-size: clamp(20px, 6vw, 32px);
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.rotate-description {
+    font-size: clamp(13px, 3.6vw, 18px);
+    line-height: 1.6;
+}
+
+/* ========================================
+   全国正解率：フォント統一
+   ======================================== */
+
+.quiz-heading .national-rate,
+.quiz-heading .national-rate span {
+    font-family: NotoJP, "Noto Sans JP", sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 1.2;
+    color: white;
+    text-shadow: 0 1px 3px #000c;
+    transform: translate(-30px, 10px);
+}
+
+
+/* ========================================
+   全国正解率：表示位置と文字スタイル
+   ======================================== */
+
+.quiz-heading .national-rate {
+    position: absolute;
+    right: 265px;
+    top: 50%;
+    transform: translateY(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+
+    font-family: NotoJP, "Noto Sans JP", sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 1.2;
+    color: white;
+    text-shadow: 0 1px 3px #000c;
+
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* 数値欄：100まで入る幅を確保 */
+.quiz-heading .national-rate-value {
+    display: inline-block;
+    flex: 0 0 3.5ch;
+    width: 3.5ch;
+
+    text-align: center;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 出題演出中は選択肢の内容だけ隠す。
+   キーボード・OKボタン・スロットのリールと上下ボタンは常時表示。 */
+.quiz-shell.options-concealed #question-ui *:not( :is(.slot-area, .slot-area *,
+        .typing-keys, .typing-keys *,
+        .fx-multi-ok, .rearrange-ok,
+        .fx-ox-button, .fx-ox-button *)) {
+    color: transparent !important;
+    -webkit-text-fill-color: transparent !important;
+    text-shadow: none !important;
+}
+
+.quiz-shell.options-concealed #question-ui :is(.typing-keys button, .fx-multi-ok, .rearrange-ok,
+    .fx-ox-button, .fx-ox-button *) {
+    -webkit-text-fill-color: currentColor !important;
+}
+
+.quiz-shell.options-concealed #question-ui :is(img, canvas, svg):not(.slot-area *, .fx-ox-button *) {
+    visibility: hidden !important;
+}
+
+/* 100問チャレンジ：ハートだけの文字サイズ */
+.quiz-shell:has(#rank-target) .rank-panel-web #rank-target.life-hearts {
+    font-size: 32px;
+}
+
+
+/* ==========================================
+   IMAGE_TOUCH：マーカーの個別位置調整
+   ========================================== */
+
+/* ○：正解 */
+.image-touch-marker.image-touch-correct {
+    transform: translate(calc(-50% + 0px),
+            calc(-50% + -2px));
+}
+
+/* ×：不正解 */
+.image-touch-marker.image-touch-incorrect {
+    transform: translate(calc(-50% + 0px),
+            calc(-50% + 0px));
+}
+
+/* ========================================
+   連想クイズのフェード速度
+   ======================================== */
+
+.quiz-shell .rensou-java-placeholder,
+.quiz-shell .rensou-java-hint-text {
+    transition: opacity var(--rensou-hint-fade-duration, 0.5s) linear;
+}
+
+/* ========================================
+   起動時ロード画面
+   ======================================== */
+
+.startup-loading {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background:
+        linear-gradient(135deg, #07152e, #153d70);
+
+    color: white;
+    font-family: "Noto Sans JP", sans-serif;
+    z-index: 100;
+}
+
+.startup-loading-title {
+    font-size: 66px;
+    font-weight: 900;
+    letter-spacing: 5px;
+    text-shadow: 0 4px 12px #0008;
+    margin-bottom: 45px;
+}
+
+.startup-loading-status {
+    font-size: 25px;
+    font-weight: bold;
+    letter-spacing: 4px;
+    margin-bottom: 20px;
+}
+
+.startup-loading-bar {
+    width: 560px;
+    height: 18px;
+
+    background: #ffffff33;
+    border: 2px solid #ffffff77;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.startup-loading-progress {
+    width: 0%;
+    height: 100%;
+
+    background: linear-gradient(90deg,
+            #42a5f5,
+            #a5e6ff);
+
+    transition: width 0.2s ease;
+}
+
+.startup-loading-percent {
+    margin-top: 16px;
+    font-size: 32px;
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+}
+
+.startup-loading-detail {
+    margin-top: 10px;
+    font-size: 17px;
+    color: #d4e8ff;
+}
+
+.startup-loading-start {
+    margin-top: 38px;
+    padding: 16px 52px;
+
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+
+    background: #2878c9;
+    border: 2px solid white;
+    border-radius: 12px;
+
+    cursor: pointer;
+    animation: startup-button-pulse 1.5s infinite;
+}
+
+.startup-loading-start:hover {
+    background: #3998ee;
+}
+
+.startup-loading-start[hidden] {
+    display: none;
+}
+
+/* ========================================
+   起動時ロード画面
+   ======================================== */
+
+.startup-loading {
+    position: absolute;
+    inset: 0;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    background: #000;
+    color: #fff;
+
+    font-family: "Noto Sans JP", sans-serif;
+    z-index: 100;
+}
+
+/* LOADING... */
+
+.startup-loading-status {
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 5px;
+
+    margin-bottom: 24px;
+}
+
+/* プログレスバーの外枠 */
+
+.startup-loading-bar {
+    width: 500px;
+    height: 14px;
+
+    background: #333;
+    border: 2px solid #777;
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+/* プログレスバー本体 */
+
+.startup-loading-progress {
+    width: 0%;
+    height: 100%;
+
+    background: #fff;
+
+    transition: width 0.15s linear;
+}
+
+/* ========================================
+   ロード進捗率
+   ======================================== */
+
+.startup-loading-percent {
+    margin-top: 18px;
+
+    font-size: 30px;
+    font-weight: bold;
+
+    color: #ffffff;
+
+    font-variant-numeric: tabular-nums;
+}
+
+
+/* ========================================
+   読み込み中ファイル表示
+   ======================================== */
+設定 .startup-loading-detail {
+    margin-top: 12px;
+
+    font-size: 17px;
+    color: #bbbbbb;
+
+    text-align: center;
+
+    min-height: 26px;
+}
+
+/* ========================================
+   画面全体のフェードインを無効化
+   ======================================== */
+
+.screen-enter {
+    animation: none !important;
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+/* ========================================
+   100問チャレンジ達成演出
+   ======================================== */
+
+.hundred-clear-message {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: rgb(255, 64, 64);
+    font-size: 64px;
+    text-shadow: 0 0 12px rgba(255, 255, 128, 1);
+    transform: translate(0px, 0px);
+}
+
+/* ========================================
+   連想クイズ：選択肢とABCDの文字影
+   ======================================== */
+
+.quiz-shell .rensou-java-choice,
+.quiz-shell .rensou-java-number {
+    text-shadow: 0 1px 3px #000;
+}

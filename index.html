@@ -1,13 +1,75 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
-  <title>理系検定</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
+    <title>理系検定</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      .quiz-shell .quiz-heading .national-rate {
+        position: absolute;
+        right: 265px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 23px;
+        font-weight: bold;
+        width: 150px;
+        display: flex;
+        align-items: baseline;
+        justify-content: flex-start;
+        text-align: left;
+        white-space: nowrap;
+        color: #fff;
+        text-shadow: 0 0 5px #000, 0 0 9px #000;
+        pointer-events: none;
+      }
+      .quiz-shell .quiz-heading .national-rate-value {
+        display: inline-block;
+        width: 3ch;
+        text-align: right;
+        font-variant-numeric: tabular-nums;
+      }
+    </style>
+    
 </head>
+
 <body>
-  <h1>理系検定</h1>
-  <p>GitHub Pages 公開テスト成功！</p>
+    <div id="rotate-notice" role="status" aria-live="polite" hidden>
+        <div class="rotate-notice-content">
+            <div class="rotate-icon" aria-hidden="true">↻</div>
+            <div class="rotate-title">端末を横向きにしてください</div>
+            <div class="rotate-description">このゲームはスマートフォンの横画面に対応しています</div>
+        </div>
+    </div>
+    <main id="stage">
+        <section id="app" aria-live="polite"></section>
+    </main>
+    <script defer src="js/questions/BaseQuestion.js"></script>
+    <script defer src="js/questions/TypingSupport.js"></script>
+    <script defer src="js/questions/SharedValidators.js"></script>
+    <script defer src="js/questions/VisualTypingSupport.js"></script>
+    <script defer src="js/questions/CharacterPanelQuestion.js"></script>
+    <script defer src="js/questions/SlotQuestion.js"></script>
+    <script defer src="js/questions/GroupQuestion.js"></script>
+    <script defer src="js/questions/OrderQuestion.js"></script>
+    <script defer src="js/questions/OrderAQuestion.js"></script>
+    <script defer src="js/questions/RearrangementQuestion.js"></script>
+    <script defer src="js/questions/LineMatchingQuestion.js"></script>
+    <script defer src="js/questions/RensouQuestion.js"></script>
+    <script defer src="js/questions/EffectQuestion.js"></script>
+    <script defer src="js/questions/PolyhedronQuestion.js"></script>
+    <script defer src="js/questions/NumberQuestion.js"></script>
+    <script defer src="js/questions/KanaQuestion.js"></script>
+    <script defer src="js/questions/KatakanaQuestion.js"></script>
+    <script defer src="js/questions/ChoiceQuestion.js"></script>
+    <script defer src="js/questions/OXQuestion.js"></script>
+    <script defer src="js/questions/MultipleChoiceQuestion.js"></script>
+    <script defer src="js/questions/OneWayQuestion.js"></script>
+    <script defer src="js/questions/ImageTouchQuestion.js"></script>
+    <script defer src="js/QuestionManager.js"></script>
+    <script defer src="js/SoundManager.js"></script>
+    <script defer src="js/main.js"></script>
 </body>
+
 </html>
