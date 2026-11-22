@@ -23,9 +23,9 @@ class SoundManager {
     // ========================================
 
     static music = {
-        STANDARD: 'quiz_bgm.wav',
+        STANDARD: 'quiz_bgm.mp3',
         HIGH_SPEED: 'high_speed.mp3',
-        HUNDRED_CHALLENGE: 'hundred_bgm.wav',
+        HUNDRED_CHALLENGE: 'hundred_bgm.mp3',
         TITLE: 'title.mp3'
     };
 
