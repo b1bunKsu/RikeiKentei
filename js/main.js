@@ -1355,7 +1355,7 @@ function startQuestionWipe() {
 }
 
 // 全国正解率：取得済みの値を解答時に固定して表示する
-const NATIONAL_RATE_API = null; // GitHub Pages test: API not configured yet
+const NATIONAL_RATE_API = "https://rikeikentei-api.netlify.app/.netlify/functions/correct-rate"; // GitHub Pages test: API not configured yet
 let nationalRateRequestSequence = 0;
 let nationalRateSnapshot = null;
 
