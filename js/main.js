@@ -1411,7 +1411,7 @@ function finalizeNationalRate(q, correct, timeout) {
   // 同じ出題に対する二重送信を防止
   if (nationalRateSubmitted) return;
   nationalRateSubmitted = true;
-  
+
   const requestId = typeof crypto !== 'undefined' && crypto.randomUUID
     ? crypto.randomUUID()
     : `${Date.now()}-${Math.random().toString(36).slice(2)}`;
